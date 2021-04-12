@@ -1,0 +1,365 @@
+<manifest alg="2" build="2018.1.0.386" opt="false" iceEnabled="true" iceMarkupVersion="2" iceEnabledOptions="link,responsive,cachebuster,textStyling" exportTarget="other" domain="hubble.cl" resolutions="1x,2x" timestamp="1618067831593">
+  <folder name="css">
+    <file name="site_global.css" crc="245061865"/>
+    <file name="master_a-master.css" crc="4158164025" ref="index:panel-de-cuentas-lineage-hubble"/>
+    <file name="index.css" crc="4179082566" ref="index"/>
+    <file name="panel-de-cuentas-lineage-hubble.css" crc="188666786" ref="panel-de-cuentas-lineage-hubble"/>
+  </folder>
+  <folder name="fonts">
+    <file name="fontawesome-webfont.woff" crc="46680941"/>
+    <file name="fontawesome-webfont.eot" crc="120927976"/>
+    <file name="fontawesome-webfont.svg" crc="486128287"/>
+  </folder>
+  <folder name="scripts">
+    <file name="jquery-1.8.3.min.js" crc="209076791" ref="index:panel-de-cuentas-lineage-hubble"/>
+    <file name="museutils.js" crc="340535759" ref="index:panel-de-cuentas-lineage-hubble"/>
+    <file name="whatinput.js" crc="86476730" ref="index:panel-de-cuentas-lineage-hubble"/>
+    <file name="museconfig.js" crc="4286661555" ref="index:panel-de-cuentas-lineage-hubble"/>
+    <file name="jquery.musepolyfill.bgsize.js" crc="4260645839" ref="index:panel-de-cuentas-lineage-hubble"/>
+    <file name="jquery.musemenu.js" crc="510910590" ref="index:panel-de-cuentas-lineage-hubble"/>
+    <file name="jquery.watch.js" crc="51536988" ref="index:panel-de-cuentas-lineage-hubble"/>
+    <file name="webpro.js" crc="4059564322" ref="index"/>
+    <file name="musewpdisclosure.js" crc="3883500470" ref="index"/>
+    <file name="musewpslideshow.js" crc="3862962738" ref="index"/>
+    <file name="jquery.museoverlay.js" crc="4147669564" ref="index"/>
+    <file name="touchswipe.js" crc="4075097462" ref="index"/>
+    <file name="jquery.scrolleffects.js" crc="39568856" ref="index"/>
+    <file name="html5shiv.js" crc="4241844378" ref="index:panel-de-cuentas-lineage-hubble"/>
+    <file name="require.js" crc="7928878" ref="index:panel-de-cuentas-lineage-hubble"/>
+  </folder>
+  <folder name="images">
+    <file name="server-lineage-hubble-interlude-c6-favicon.ico" crc="385206661" ref="index"/>
+    <file name="fondo-menu.jpg" crc="524636183" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="separador.png" crc="254529110" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="menu-top-active2.png" crc="3891454996" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="logo-hubble-chico.png" crc="4157173995" seo="true" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="logo-hubble-chico_2x.png" crc="29176125" seo="true" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="navi-line.png" crc="3945245593" seo="true" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="navi-line_2x.png" crc="3885344395" seo="true" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="fuego1.png" crc="490895624" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="fuego1_2x.png" crc="514173100" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="grand-opening.png" crc="4203851578" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="grand-opening_2x.png" crc="204927019" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="25julio-2021.png" crc="4146583159" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="25julio-2021_2x.png" crc="186911894" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="btn-def.png" crc="375401323" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="btn-red.png" crc="300055884" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icon-facebbok-blank.png" crc="366081732" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icon-facebbok-blank_2x.png" crc="25277827" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icon-facebbok-color.png" crc="3870647825" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icon-facebbok-color_2x.png" crc="308993626" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icon-instagram-hubble-blank.png" crc="3818215671" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icon-instagram-hubble-blank_2x.png" crc="220891492" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icon-instagram-hubble-color.png" crc="113911125" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icon-instagram-hubble-color_2x.png" crc="4019771322" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icon-youtube-blank.png" crc="81697050" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icon-youtube-blank_2x.png" crc="109842576" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icon-youtube-color.png" crc="411620380" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icon-youtube-color_2x.png" crc="225536250" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="logo-hubble550.png" crc="4241927718" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="dropdown3-u13771-6-fr.png" crc="526544483" ref="index"/>
+    <file name="dropdown3-u13771-6-fr_2x.png" crc="4217201596" ref="index"/>
+    <file name="button-u13772-4-fr.png" crc="4220599856" ref="index"/>
+    <file name="button-u13772-4-fr_2x.png" crc="346876859" ref="index"/>
+    <file name="button-u13772-4-r-fr.png" crc="92372665" ref="index"/>
+    <file name="button-u13772-4-r-fr_2x.png" crc="4155332928" ref="index"/>
+    <file name="borde001.png" crc="55733118" seo="true" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="borde001_2x.png" crc="229714031" seo="true" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="borde002.png" crc="4178680506" seo="true" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="borde002_2x.png" crc="220399948" seo="true" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="fondo-reglas.jpg" crc="4143177408" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="white_texture.jpg" crc="3930870907" ref="index">
+      <caption webpage="index" alt="﷯ 1. MIEMBROS DEL STAFF"/>
+    </file>
+    <file name="post-icon.png" crc="193148304" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="post-icon_2x.png" crc="3994996774" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="capa-1s-u9227-fr.png" crc="4277578919" ref="index"/>
+    <file name="capa-1s-u9227-fr_2x.png" crc="4052723281" ref="index"/>
+    <file name="sep_small.png" crc="230768824" seo="true" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="sep_small_2x.png" crc="4226699088" seo="true" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="logo-hubble-chico-u9012.png" crc="3789983456" ref="index"/>
+    <file name="logo-hubble-chico-u9012_2x.png" crc="370337714" ref="index"/>
+    <file name="server-rates---caracteristicas.png" crc="3973732418" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="server-rates---caracteristicas_2x.png" crc="4015086073" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="server__load_empty.png" crc="3802337130" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="capa-19.jpg" crc="103691475" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="donaciones.png" crc="4023991792" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="donaciones_2x.png" crc="4039399290" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="donationmanager1.jpg" crc="4144749454" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="capa-14.jpg" crc="263265212" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="video-baium-u13852-fr.jpg" crc="3798148975" ref="index"/>
+    <file name="video-baium-u13852-fr_2x.jpg" crc="42024418" ref="index"/>
+    <file name="play2.png" crc="37181896" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="play2_2x.png" crc="452190725" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="topzone.png" crc="378169697" seo="true" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="topzone_2x.png" crc="3766649973" seo="true" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="images.jpg" crc="365612656" seo="true" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="images_2x.jpg" crc="4040203542" seo="true" ref="index:panel-de-cuentas-lineage-hubble">
+      <caption webpage="index" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="panel-de-cuentas-lineage-hubble-favicon.ico" crc="385206661" ref="panel-de-cuentas-lineage-hubble"/>
+    <file name="base22-u12580.png" crc="3849314570" ref="panel-de-cuentas-lineage-hubble"/>
+    <file name="base22-u12580_2x.png" crc="87262934" ref="panel-de-cuentas-lineage-hubble"/>
+    <file name="base2-u12374.png" crc="39482355" ref="panel-de-cuentas-lineage-hubble"/>
+    <file name="base2-u12374_2x.png" crc="3856907909" ref="panel-de-cuentas-lineage-hubble"/>
+    <file name="logo-redes.png" crc="194844868" seo="true" ref="panel-de-cuentas-lineage-hubble">
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="logo-redes_2x.png" crc="475082715" seo="true" ref="panel-de-cuentas-lineage-hubble">
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="main-background.jpg" crc="4061546237" ref="panel-de-cuentas-lineage-hubble">
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="dropdown3-u12431-6-fr.png" crc="235846938" ref="panel-de-cuentas-lineage-hubble"/>
+    <file name="borde004.png" crc="76349480" seo="true" ref="panel-de-cuentas-lineage-hubble">
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="borde004_2x.png" crc="3864282240" seo="true" ref="panel-de-cuentas-lineage-hubble">
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="line.png" crc="217480939" seo="true" ref="panel-de-cuentas-lineage-hubble">
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="line_2x.png" crc="277204192" seo="true" ref="panel-de-cuentas-lineage-hubble">
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="2018883.jpg" crc="18014053" ref="panel-de-cuentas-lineage-hubble">
+      <caption webpage="panel-de-cuentas-lineage-hubble" alt=""/>
+    </file>
+    <file name="fondo_reglas.jpg" crc="507975023" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="fondo_reglas-u9231-r-fr.png" crc="4073458738" ref="index"/>
+    <file name="elfwoman2.png" crc="406810521" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="elfwoman2_2x.png" crc="4039516304" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="bg-clear2.jpg" crc="4037149337" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="portada-hubble.jpg" crc="96456959" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="capa2-hubble.jpg" crc="3865561237" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="flecha2.png" crc="29526110" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="flecha2_2x.png" crc="330648952" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="flecha2-u13842-r-fr.png" crc="4187217577" ref="index"/>
+    <file name="flecha2-u13842-r-fr_2x.png" crc="264532513" ref="index"/>
+    <file name="flecha1.png" crc="187028079" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="flecha1_2x.png" crc="465541098" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="flecha1-u13956-r-fr.png" crc="4044288394" ref="index"/>
+    <file name="flecha1-u13956-r-fr_2x.png" crc="458182593" ref="index"/>
+  </folder>
+  <file name="index.html" crc="4107894261" seo="true" mt="1618064510280" redirect="true"/>
+  <file name="panel-de-cuentas-lineage-hubble.html" crc="4176900758" seo="true" mt="1618057285706" redirect="true"/>
+</manifest>
