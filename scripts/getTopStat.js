@@ -1,3 +1,5 @@
+let users = [];
+
 const obtenerDatos = ()=>{
     let url = 'http://127.0.0.1:5000/users';
     
@@ -8,11 +10,16 @@ const obtenerDatos = ()=>{
     api.onreadystatechange = function () {
         if (this.status == 200 && this.readyState == 4) {
             let datos = JSON.parse(this.responseText);
-            console.log(datos)
+            users = datos.users;
+            console.log(users[0])
+            const pUserName = document.getElementById("user_name");
+            const text = document.createTextNode(users[0].name);
+
+            pUserName.appendChild(text);
         }
     }
-    console.log("k pasa")
+
 }
 
+
 obtenerDatos();
-console.log("k pasooooo")
