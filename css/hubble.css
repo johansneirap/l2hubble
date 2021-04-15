@@ -4,9 +4,14 @@
 }
 .btn-form{
     cursor:pointer !important;
+    padding-left: 2em;
 }
 a:visited,a:link, a:hover {
     color: white;
     background-color: transparent;
     text-decoration: none;
   }
+
+.input-error{
+  border: 3px solid #b30430;
+}
