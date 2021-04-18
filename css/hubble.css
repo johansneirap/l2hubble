@@ -15,3 +15,34 @@ a:visited,a:link, a:hover {
 .input-error{
   border: 3px solid #b30430;
 }
+.toplist {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.toplist th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  color: white;
+  padding-left:0.81rem;
+}
+.toplist td{
+  text-align: left;
+}
+
+
+#u14699-4,#u14702-4,#u14705-4{
+  width: 33%;
+}
+#u14699-4{
+  border-right: 1px solid white;
+}
+#u14705-4{
+  border-left: 1px solid white;
+  padding-left: 2rem;
+}
+#u14702-4{
+  padding-left: 2rem;
+}

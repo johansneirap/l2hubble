@@ -11,7 +11,7 @@ const txtRegUser = document.querySelector('.txt-reg-user');
 const txtRegPass = document.querySelector('.txt-reg-pass');
 const txtRegPass2 = document.querySelector('.txt-reg-pass2');
 const txtMail = document.querySelector('.txt-reg-mail');
-const txtMail2 = document.querySelector('txt-reg-mail2');
+const txtMail2 = document.querySelector('.txt-reg-mail2');
 const registerSubmit = document.querySelector(".registerSubmit");
 
 //handle the links to panel only with auth=true
@@ -87,8 +87,27 @@ const signupHandler = async ()=>{
                 email,
                 password
             };
-            const regNewUser = await axios.post(url,newUser);
-            console.log(regNewUser);
+            if (txtRegPass.value == txtRegPass2.value) {
+                console.log(txtMail.value);
+                console.log(txtMail2.value);
+                if (txtMail.value == txtMail2.value) {
+                    // full valid form next action
+                    const regNewUser = await axios.post(url,newUser);
+                    console.log(regNewUser);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Both Email fields must match!'
+                      })
+                }
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Both Passwords fields must match!'
+                  })
+            }
         }
     } catch (error) {
         console.log(error)
@@ -102,6 +121,8 @@ const validateForm = (form)=>{
     for (let i = 0; i < inputsRequired.length; i++) {
         if (inputsRequired[i].value == ''){
             inputsRequired[i].classList.add('input-error');
+            const elementId = inputsRequired[i].id;
+            $(`#${elementId}`).notify("Input required",{ position:"right middle" });
             error = true;
         }else{
             inputsRequired[i].classList.remove('input-error');
@@ -115,6 +136,7 @@ const validateAlphaNumeric = (inputTxt)=>{
     const letters = /^[0-9a-zA-Z]+$/;
     if (!inputTxt.value.match(letters)) {
         error = true
+        $(`#${inputTxt.id}`).notify("Input must be alphanumerical",{ position:"right middle" });
     } 
     return error;
 }
