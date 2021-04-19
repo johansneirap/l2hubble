@@ -6,6 +6,9 @@
   cursor:pointer !important;
   padding-left: 2em;
 }
+.registerSubmit{
+  cursor: pointer !important;
+}
 a:visited,a:link, a:hover {
     color: white;
     background-color: transparent;

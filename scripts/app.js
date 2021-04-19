@@ -81,10 +81,12 @@ const signupHandler = async ()=>{
         const errorForm = validateForm('#registerForm');
         if (!errorForm && !errorAlphaNumeric){
             const url = 'https://reqres.in/api/register';
-            const email = 'eve.holt@reqres.in';
+            const mail = 'eve.holt@reqres.in';
             const password = 'pistol';
+            const username = txtRegUser.value;
             const newUser = {
-                email,
+                username,
+                mail,
                 password
             };
             if (txtRegPass.value == txtRegPass2.value) {
@@ -92,8 +94,17 @@ const signupHandler = async ()=>{
                 console.log(txtMail2.value);
                 if (txtMail.value == txtMail2.value) {
                     // full valid form next action
-                    const regNewUser = await axios.post(url,newUser);
-                    console.log(regNewUser);
+                    if (validateEmail(txtMail.value)) {
+                        const regNewUser = await axios.post(url,newUser);
+                        console.log(regNewUser);
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Email format is not valid'
+                          })
+                    }
+                    
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -139,6 +150,10 @@ const validateAlphaNumeric = (inputTxt)=>{
         $(`#${inputTxt.id}`).notify("Input must be alphanumerical",{ position:"right middle" });
     } 
     return error;
+}
+const validateEmail = (email)=>{
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
 }
 
 const clearForm = ()=>{

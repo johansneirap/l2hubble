@@ -1,5 +1,4 @@
 
-const users = [];
 const user = {
     name:"",
     mail:"mail@gmail.com",
@@ -7,13 +6,25 @@ const user = {
     lastLogin: "Today",
     characters:[]
 };
+const username = "tt";
+const getCharacters = async(username)=>{
+    const url = `http://localhost/getCharacters/${username}`
+    const chars = await axios.get(url);
+    console.log(chars);
+}
+getCharacters(username);
+
 user.name = localStorage.getItem('user');
 console.log(user);
-const username = document.getElementById('user_name');
-console.log(username)
-if (user) {
+// const username = document.getElementById('user_name');
+// console.log(username);
+
+if (user.name) {
     username.innerHTML = user.name.replace(/^\w/, (c) => c.toUpperCase());
+}else{
+    window.location.assign("index.html");
 }
+
 
 //panel ui
 const userInfoPanel = document.getElementById('user-info');
@@ -26,6 +37,8 @@ const topPvpPanel = document.getElementById('topPvp');
 const topPkPanel = document.getElementById('topPk');
 const topClanPanel = document.getElementById('topClan');
 const bossJewells = document.getElementById('bossJewells');
+
+
 // array of elements panel UI
 const panelsArr = [
     userInfoPanel,

@@ -15,9 +15,9 @@ a:link, a:visited {
     opacity: 1 !important;
 }
 
-.user-info{
-    /* margin-top: 2em; */
-}
+/* .user-info{
+    margin-top: 2em;
+} */
 .container{
     padding: 1em 1em;
     display: grid;
