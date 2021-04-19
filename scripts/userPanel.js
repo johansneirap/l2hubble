@@ -1,11 +1,18 @@
 
-let users = [];
-const user = localStorage.getItem('user');
+const users = [];
+const user = {
+    name:"",
+    mail:"mail@gmail.com",
+    createdDate: "Yesterday",
+    lastLogin: "Today",
+    characters:[]
+};
+user.name = localStorage.getItem('user');
 console.log(user);
 const username = document.getElementById('user_name');
 console.log(username)
 if (user) {
-    username.innerHTML = user.replace(/^\w/, (c) => c.toUpperCase());
+    username.innerHTML = user.name.replace(/^\w/, (c) => c.toUpperCase());
 }
 
 //panel ui
@@ -60,11 +67,7 @@ const linksArr = [
     linkTopClan,
     linkBossJewells
 ]
-
-const clickPanelHandler = () => {
-
-}
-
+//eventListener for clicks of links in account panel
 linkUserInfo.addEventListener('click',()=>displayPanel('user-info'));
 linkUserInfo2.addEventListener('click',()=>displayPanel('user-info'));
 linkUserInfo3.addEventListener('click',()=>displayPanel('user-info'));
@@ -80,10 +83,6 @@ linkBossJewells.addEventListener('click',()=> displayPanel('bossJewells'));
 
 //function handler for toggle displays on panels UI
 const displayPanel = (id)=>{
-    // Swal.fire({
-    //     "title":"Welcome"
-    // }
-    //   );
     panelsArr.forEach(element => {
         if (element.id === `${id}`) {
             console.log(element.id);
@@ -93,3 +92,27 @@ const displayPanel = (id)=>{
         }
     });
 }
+
+// arrange txt of user info panel
+const txtUser = document.getElementById('txtUser');
+const txtMail = document.getElementById('txtMail');
+const txtCreatedDate = document.getElementById('txtCreatedDate');
+const txtLastLogin = document.getElementById('txtLastLogin');
+const txtCountChars = document.getElementById('txtCountChars');
+const txtTopPvp = document.getElementById('txtTopPvp');
+const txtTopPk = document.getElementById('txtTopPk');
+const txtTopClan = document.getElementById('txtTopClan');
+const txtTopLvl = document.getElementById('txtTopLvl');
+const txtTopOnline = document.getElementById('txtTopOnline');
+
+console.log(txtCreatedDate);
+txtUser.innerHTML = user.name;
+txtMail.innerHTML = user.mail;
+txtCreatedDate.innerHTML = user.createdDate;
+txtLastLogin.innerHTML = user.lastLogin;
+txtCountChars.innerHTML = user.characters.length;
+txtTopPvp.innerHTML = "topPvpChar";
+txtTopPk.innerHTML = "topPkChar";
+txtTopClan.innerHTML = "topClan";
+txtTopLvl.innerHTML = "topLvlChar";
+txtTopOnline.innerHTML = "topOnlineChar";

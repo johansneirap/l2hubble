@@ -16,7 +16,7 @@ a:link, a:visited {
 }
 
 .user-info{
-    margin-top: 2em;
+    /* margin-top: 2em; */
 }
 .container{
     padding: 1em 1em;
@@ -128,3 +128,55 @@ a:link, a:visited {
 #topList tr:nth-child(even){background-color: #f2f2f2;}
   
 #topList tr:hover {background-color: #ddd;}
+
+#u12348{
+    margin-top: 2rem;
+}
+
+.box-container{
+    padding: 1rem;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-auto-rows: 100px;
+    grid-gap: 20px;
+}
+.box-container input{
+    border: 1px solid rgb(107, 107, 107);
+    border-radius: 2px;
+    margin-bottom: 10px;
+    font-size: 24px;
+    line-height: 24px;
+    text-align: center;
+}
+.btn-form{
+    cursor:pointer !important;
+    border: 1px solid rgb(107, 107, 107);
+    font-size: 20px;
+    border-radius: 5px;
+    line-height: 24px;
+    padding: 1%;
+    background-color: rgb(54, 45, 44);
+    color: white;
+}
+.btn-form:hover{
+    background-color: rgb(109, 91, 89);
+}
+.box-container-transfer{
+    padding: 1rem;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-auto-rows: 10px;
+    grid-gap: 5px;
+}
+.box-container-transfer input,select{
+    border: 1px solid rgb(107, 107, 107);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 24px;
+    line-height: 24px;
+    text-align: center;
+}

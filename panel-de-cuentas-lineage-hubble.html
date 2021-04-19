@@ -333,64 +333,64 @@
         <div class="shadow grpelem" id="u12348">
           <!-- Start Control Panel -->
           <div id="user-info" class="user-info option-panel">
-          <div class="container">
-            <div class="box-info">
-              <h1>User Info</h1>
-              <div class="lines">
-                <div>Username: <span>Developer1</span></div>
-                <div class="two">Email: <span>dev1@gmail.com</span></div>
-                <div>Created in:<span>4/15/2021 21:38:43</span></div>
-                <div class="two">Last login:<span></span></div>
-                <div>Characters:<span>0</span></div>
-              </div>
-            </div>
-            <div class="box-info">
-              <h1>Top stats server</h1>
-              <div class="lines">
-                <div>Top PVP</div>
-                <div class="two">Top PK<span></span></div>
-                <div>Top Clan<span></span></div>
-                <div class="two">Top LVL<span></span></div>
-                <div>Top online<span></span></div>
-              </div>
-            </div>
-          </div>
-          <div class="chars-container">
-            <div class="row">
-              <select class="name-character" name="chars">
-                <option value="Select a character">Select a character</option>
-              </select>
-            </div>
             <div class="container">
-              <div class="box">
+              <div class="box-info">
+                <h1>User Info</h1>
                 <div class="lines">
-                  <div>Name: <span>nameChar</span></div>
-                <div class="two">Title: <span>titleChar</span></div>
-                <div>Created in:<span>createdInChar</span></div>
-                <div class="two">Online:<span>isOnline</span></div>
-                <div>Base class:<span>baseClassChar</span></div>
-                <div class="two">Sub 1:<span>sub1Char</span></div>
-                <div>Sub 2:<span>sub2Char</span></div>
-                <div class="two">Sub 3:<span>sub3Char</span></div>
-                <div>Base level:<span>baseLevelChar</span></div>
+                  <div>Username: <span id="txtUser"></span></div>
+                  <div class="two">Email: <span id="txtMail"></span></div>
+                  <div>Created in:<span id="txtCreatedDate">4/15/2021 21:38:43</span></div>
+                  <div class="two">Last login:<span id="txtLastLogin"></span></div>
+                  <div>Characters:<span id="txtCountChars">0</span></div>
                 </div>
               </div>
-              <div class="box">
+              <div class="box-info">
+                <h1>Top stats server</h1>
                 <div class="lines">
-                <div class="two">Gender: <span>genderChar</span></div>
-                <div>PVP:<span>pvpCountChar</span></div>
-                <div class="two">PK:<span>pkCountChar</span></div>
-                <div>Karma:<span>karmaCountChar</span></div>
-                <div class="two">Clan:<span>clanChar</span></div>
-                <div>Alliance:<span>aliianceChar</span></div>
-                <div class="two">Noble:<span>isNoble</span></div>
-                <div>Hero:<span>isHero</span></div>
-                <div class="two">Online time:<span>onlineTimeCounterChar</span></div>
+                  <div>Top PVP <span id="txtTopPvp"></span></div>
+                  <div class="two">Top PK<span id="txtTopPk"></span></div>
+                  <div>Top Clan<span id="txtTopClan"></span></div>
+                  <div class="two">Top LVL<span id="txtTopLvl"></span></div>
+                  <div>Top online<span id="txtTopOnline"></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="chars-container">
+              <div class="row">
+                <select class="name-character" name="chars">
+                  <option value="Select a character">Select a character</option>
+                </select>
+              </div>
+              <div class="container">
+                <div class="box">
+                  <div class="lines">
+                    <div>Name: <span>nameChar</span></div>
+                    <div class="two">Title: <span>titleChar</span></div>
+                    <div>Created in:<span>createdInChar</span></div>
+                    <div class="two">Online:<span>isOnline</span></div>
+                    <div>Base class:<span>baseClassChar</span></div>
+                    <div class="two">Sub 1:<span>sub1Char</span></div>
+                    <div>Sub 2:<span>sub2Char</span></div>
+                    <div class="two">Sub 3:<span>sub3Char</span></div>
+                    <div>Base level:<span>baseLevelChar</span></div>
+                  </div>
+                </div>
+                <div class="box">
+                  <div class="lines">
+                    <div class="two">Gender: <span>genderChar</span></div>
+                    <div>PVP:<span>pvpCountChar</span></div>
+                    <div class="two">PK:<span>pkCountChar</span></div>
+                    <div>Karma:<span>karmaCountChar</span></div>
+                    <div class="two">Clan:<span>clanChar</span></div>
+                    <div>Alliance:<span>aliianceChar</span></div>
+                    <div class="two">Noble:<span>isNoble</span></div>
+                    <div>Hero:<span>isHero</span></div>
+                    <div class="two">Online time:<span>onlineTimeCounterChar</span></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
           <div id="make-donation" class="make-donation option-panel">
             <h1 class="subtitle">MAKE A DONATION</h1>
           </div>
@@ -429,22 +429,48 @@
           </div>
           <div id="transfer-donation" class="option-panel">
             <h1 class="subtitle">TRANSFER HUBBLE COINS</h1>
-            <select name="" id="charSourceCoin">
-              <option value="">Select a character with coins</option>
-              <option value="">charName</option>
-            </select>
-            <br><br>
-            <b>Coins balance: </b><br><br>
-            <select name="" id="charDestinationCoin">
-              <option value="">Select a character destination for coins</option>
-              <option value="">charName</option>
-            </select><br><br>
-            <b>Enter the amount to transfer: </b>
-            <input class="amount-to-transfer" type="text" /><br><br>
-            <button type="button" class="transfer-btn">Transfer</button>
+            <div class="box-container-transfer">
+              <div class="row">
+                <select name="" id="charSourceCoin">
+                  <option value="">Select a character with coins</option>
+                  <option value="">charName</option>
+                </select>
+                <div>
+                  <b>Coins balance: </b>
+
+                </div>
+              </div>
+              <div class="row">
+                <select name="" id="charDestinationCoin">
+                  <option value="">Select a character destination for coins</option>
+                  <option value="">charName</option>
+                </select>
+              </div>
+              <div>
+                <b>Enter the amount to transfer: </b>
+                <input class="amount-to-transfer" type="text" />
+              </div>
+              <div class="row">
+                <button type="button" class="btn-form">Transfer</button>
+              </div>
+            </div>
           </div>
           <div id="changePass" class="option-panel">
             <h1 class="subtitle">CHANGE PASSWORD PANEL</h1>
+            <div class="box-container">
+              <div class="row">
+                <input placeholder="Actual Password" type="password">
+              </div>
+              <div class="row">
+                <input placeholder="New Password" type="password">
+              </div>
+              <div class="row">
+                <input placeholder="Repeat new Password " type="password">
+              </div>
+              <div class="row">
+                <button type="button" class="btn-form"> Change password </button>
+              </div>
+            </div>
           </div>
           <div id="changeMail" class="option-panel">
             <h1 class="subtitle">CHANGE MAIL PANEL</h1>
@@ -635,7 +661,7 @@
   </script>
   <!-- RequireJS script -->
   <script src="scripts/userPanel.js" type="text/javascript"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script src="scripts/require.js?crc=7928878" type="text/javascript" async
     data-main="scripts/museconfig.js?crc=4286661555"
     onload="if (requirejs) requirejs.onError = function(requireType, requireModule) { if (requireType && requireType.toString && requireType.toString().indexOf && 0 <= requireType.toString().indexOf('#scripterror')) window.Muse.assets.check(); }"
