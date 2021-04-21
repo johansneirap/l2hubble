@@ -8,19 +8,25 @@ const user = {
 };
 const username = "tt";
 const getCharacters = async(username)=>{
-    const url = `http://localhost/getCharacters/${username}`
-    const chars = await axios.get(url);
-    console.log(chars);
+    try {
+        const url = `http://localhost/getCharacters/${username}`
+        const chars = await axios.get(url);
+        user.characters = chars.data.data;
+        populateSelectInput(selectCharacters,user.characters);
+    } catch (error) {
+        console.log(error);
+    }
 }
-getCharacters(username);
 
 user.name = localStorage.getItem('user');
 console.log(user);
-// const username = document.getElementById('user_name');
+const txtUsername = document.getElementById('user_name');
+
+getCharacters(user.name);
 // console.log(username);
 
 if (user.name) {
-    username.innerHTML = user.name.replace(/^\w/, (c) => c.toUpperCase());
+    txtUsername.innerHTML = user.name.replace(/^\w/, (c) => c.toUpperCase());
 }else{
     window.location.assign("index.html");
 }
@@ -38,6 +44,46 @@ const topPkPanel = document.getElementById('topPk');
 const topClanPanel = document.getElementById('topClan');
 const bossJewells = document.getElementById('bossJewells');
 
+const selectCharacters = document.getElementById('selectCharacters');
+
+const populateSelectInput = (select,array)=>{
+    for(var i = 0; i < array.length; i++) {
+        var opt = array[i];
+        var el = document.createElement("option");
+        el.textContent = opt.char_name;
+        el.value = opt.char_name;
+        console.log(opt);
+        select.appendChild(el);
+    }
+}
+//instancing txt
+const nameChar = document.getElementById('nameChar');
+const titleChar = document.getElementById('titleChar');
+const createdInChar = document.getElementById('createdInChar');
+const isOnline = document.getElementById('isOnline');
+const baseClassChar = document.getElementById('baseClassChar');
+const sub1Char = document.getElementById('sub1Char');
+const sub2Char = document.getElementById('sub2Char');
+const sub3Char = document.getElementById('sub3Char');
+const baseLevelChar = document.getElementById('baseLevelChar');
+const genderChar = document.getElementById('genderChar');
+const pvpCountChar = document.getElementById('pvpCountChar');
+const pkCountChar = document.getElementById('pkCountChar');
+const karmaCountChar = document.getElementById('karmaCountChar');
+const clanChar = document.getElementById('clanChar');
+const aliianceChar = document.getElementById('aliianceChar');
+const isNoble = document.getElementById('isNoble');
+const isHero = document.getElementById('isHero');
+const onlineTimeCounterChar = document.getElementById('onlineTimeCounterChar');
+
+const renderCharStat = (charName) =>{
+    console.log(user.characters);
+    char = user.characters.find(char => char.char_name === charName);
+    nameChar.textContent = char.char_name;
+    baseClassChar.textContent = char.class;
+    baseLevelChar.textContent = char.lev;
+    pkCountChar.textContent = char.pk;
+}
 
 // array of elements panel UI
 const panelsArr = [
@@ -80,6 +126,8 @@ const linksArr = [
     linkTopClan,
     linkBossJewells
 ]
+
+//event listeners 
 //eventListener for clicks of links in account panel
 linkUserInfo.addEventListener('click',()=>displayPanel('user-info'));
 linkUserInfo2.addEventListener('click',()=>displayPanel('user-info'));
@@ -93,6 +141,14 @@ linkTopPvp.addEventListener('click',()=> displayPanel('topPvp'));
 linkTopPk.addEventListener('click',()=> displayPanel('topPk'));
 linkTopClan.addEventListener('click',()=> displayPanel('topClan'));
 linkBossJewells.addEventListener('click',()=> displayPanel('bossJewells'));
+
+//event listener for render char stats
+selectCharacters.addEventListener('change',e => {
+    if (e.target.value != 'Select a character') {
+        renderCharStat(e.target.value);
+    }
+    
+});
 
 //function handler for toggle displays on panels UI
 const displayPanel = (id)=>{
@@ -129,3 +185,12 @@ txtTopPk.innerHTML = "topPkChar";
 txtTopClan.innerHTML = "topClan";
 txtTopLvl.innerHTML = "topLvlChar";
 txtTopOnline.innerHTML = "topOnlineChar";
+
+const logoutHandler = ()=>{
+    localStorage.setItem('user',"");
+    localStorage.setItem('auth',"");
+    window.location.href = "index.html";
+}
+
+const logoutSubmit = document.querySelector(".logoutSubmit");
+logoutSubmit.addEventListener('click', logoutHandler);

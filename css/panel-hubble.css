@@ -180,3 +180,24 @@ a:link, a:visited {
     line-height: 24px;
     text-align: center;
 }
+
+#u12384-4{
+    margin-top: 15px;
+    min-width: 150px;
+    margin-left: -60px;
+    cursor: pointer;
+}
+#u12384-4:hover{
+    margin-top: 15px;
+    min-width: 150px;
+    margin-left: -60px;
+    cursor: pointer;
+}
+#u12384-4 button {
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    border: 1px solid white ;
+    border-radius: 5px;
+    padding: 3px;
+}

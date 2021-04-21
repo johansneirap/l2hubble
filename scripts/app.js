@@ -162,13 +162,14 @@ const clearForm = ()=>{
 }
 loginSubmit.addEventListener("click",(e)=>{
     e.preventDefault();
+    signinHandler;
 });
 registerSubmit.addEventListener("click",(e)=>{
     e.preventDefault();
+    signupHandler;
 });
 
 loginSubmit.addEventListener('click',signinHandler);
-console.log(registerSubmit);
 registerSubmit.addEventListener("click",signupHandler);
 
 
