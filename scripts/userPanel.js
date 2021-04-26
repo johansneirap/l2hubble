@@ -1,18 +1,52 @@
-
 const user = {
     name:"",
-    mail:"mail@gmail.com",
-    createdDate: "Yesterday",
-    lastLogin: "Today",
+    mail:"",
+    createdDate: "",
+    lastLogin: "",
+    numberCharacters:0,
     characters:[]
 };
-const username = "tt";
 const getCharacters = async(username)=>{
     try {
-        const url = `http://localhost/getCharacters/${username}`
-        const chars = await axios.get(url);
+        const url = `http://localhost/getCharacters/${username}`;
+        const token = localStorage.getItem('access_token');
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+        const chars = await axios.get(url,{
+            headers: headers
+        });
         user.characters = chars.data.data;
+        user.numberCharacters = chars.data.data.length;
         populateSelectInput(selectCharacters,user.characters);
+        console.log(chars);
+        console.log(user.numberCharacters);
+        populateUserInfo();
+    } catch (error) {
+        console.log(error);
+    }
+}
+const getAccountInfo = async(username)=>{
+    try {
+        const url = `http://localhost/getAccountInfo`;
+        const token = localStorage.getItem('access_token');
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+        const data = {"username":`${username}`};
+        const response = await axios.post(url, data , {
+            headers:headers
+        })
+        console.log(response);
+        user.mail= response.data.email;
+        user.createdDate = response.data.createdIn;
+        user.lastLogin = response.data.lastLogin;
+        user.numberCharacters = user.characters.length;
+        populateUserInfo();
+        $('#onloader').fadeOut();
+        $('#page').removeClass('hidden');
     } catch (error) {
         console.log(error);
     }
@@ -22,7 +56,9 @@ user.name = localStorage.getItem('user');
 console.log(user);
 const txtUsername = document.getElementById('user_name');
 
+getAccountInfo(localStorage.getItem('user'));
 getCharacters(user.name);
+
 // console.log(username);
 
 if (user.name) {
@@ -52,7 +88,6 @@ const populateSelectInput = (select,array)=>{
         var el = document.createElement("option");
         el.textContent = opt.char_name;
         el.value = opt.char_name;
-        console.log(opt);
         select.appendChild(el);
     }
 }
@@ -175,20 +210,23 @@ const txtTopLvl = document.getElementById('txtTopLvl');
 const txtTopOnline = document.getElementById('txtTopOnline');
 
 console.log(txtCreatedDate);
-txtUser.innerHTML = user.name;
-txtMail.innerHTML = user.mail;
-txtCreatedDate.innerHTML = user.createdDate;
-txtLastLogin.innerHTML = user.lastLogin;
-txtCountChars.innerHTML = user.characters.length;
-txtTopPvp.innerHTML = "topPvpChar";
-txtTopPk.innerHTML = "topPkChar";
-txtTopClan.innerHTML = "topClan";
-txtTopLvl.innerHTML = "topLvlChar";
-txtTopOnline.innerHTML = "topOnlineChar";
+const populateUserInfo = ()=>{
+    txtUser.innerHTML = user.name;
+    txtMail.innerHTML = user.mail;
+    txtCreatedDate.innerHTML = user.createdDate;
+    txtLastLogin.innerHTML = user.lastLogin;
+    txtCountChars.innerHTML = user.numberCharacters;
+    txtTopPvp.innerHTML = "topPvpChar";
+    txtTopPk.innerHTML = "topPkChar";
+    txtTopClan.innerHTML = "topClan";
+    txtTopLvl.innerHTML = "topLvlChar";
+    txtTopOnline.innerHTML = "topOnlineChar";
+}
 
 const logoutHandler = ()=>{
-    localStorage.setItem('user',"");
-    localStorage.setItem('auth',"");
+    localStorage.removeItem('user');
+    localStorage.removeItem('auth');
+    localStorage.removeItem('access_token');
     window.location.href = "index.html";
 }
 

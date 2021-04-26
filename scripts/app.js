@@ -1,3 +1,23 @@
+window.onload = function () {
+    $('#onloader').fadeOut();
+    $('#page').removeClass('hidden');
+    const userAuth = localStorage.getItem('auth');
+    const user = localStorage.getItem('user');
+    changePanelLink(userAuth);
+    if (userAuth) {
+        $('#u13809').fadeOut();
+        $('#u13812').fadeOut();
+        $('#u13814').fadeOut();
+        $('#registerForm').fadeOut();
+        $('#u12942-3').fadeOut();
+        $('#u12957-4').fadeOut();
+        $('#idUserAuth').html(user);
+    }else{
+        $('#panelUserAuth').fadeOut();
+    }
+}
+
+
 
 console.log("no jala cabron");
 console.log('SI JALA TE LA CREISTE WE... JASDJSJDS');
@@ -18,7 +38,7 @@ const registerSubmit = document.querySelector(".registerSubmit");
 const accountPanelLink = document.getElementById('u178');
 const donationLink = document.getElementById('buttonu8980');
 
-let auth = false;
+let auth = localStorage.getItem('auth');
 const changePanelLink = (auth)=>{
     if (auth) {
         accountPanelLink.setAttribute('href','panel-de-cuentas-lineage-hubble.html');
@@ -49,11 +69,11 @@ const signinHandler = async ()=>{
         const errorAlphaNumeric = validateAlphaNumeric(txtLoginUser);
         const errorForm = validateForm('#loginForm');
         if (!errorForm && !errorAlphaNumeric) {
-            const url = 'https://reqres.in/api/login';
-            const email = 'eve.holt@reqres.in';
-            const password = 'cityslika';
+            const url = 'http://localhost/login';
+            const username = txtLoginUser.value;
+            const password = txtLoginPass.value;
             const user = {
-                email,
+                username,
                 password
             };
             const config = {
@@ -62,15 +82,31 @@ const signinHandler = async ()=>{
                 }
             }
             const authUser = await axios.post(url,user);
-            console.log(authUser);
-            auth = true;
-            localStorage.setItem("user",txtLoginUser.value);
-            localStorage.setItem('auth',true);
-            changePanelLink(auth);
-            location.href = "panel-de-cuentas-lineage-hubble.html";
+            console.log(authUser.data.code);
+            if (authUser.data.code == 200) {
+                console.log(authUser.data.message);
+                auth = true;
+                localStorage.setItem("user",txtLoginUser.value);
+                localStorage.setItem('auth',true);
+                localStorage.setItem('access_token',authUser.data.access_token);
+                console.log(localStorage.getItem('access_token'))
+                changePanelLink(auth);
+                location.href = "panel-de-cuentas-lineage-hubble.html";
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Inicio de sesión incorrecto',
+                    text: 'Credenciales inválidas'
+                  })
+            }
         }
     } catch (error) {
         console.log(error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error en inicio de sesion',
+            text: 'Usuario no encontrado'
+          })
     }
 }
 
@@ -80,23 +116,37 @@ const signupHandler = async ()=>{
         const errorAlphaNumeric = validateAlphaNumeric(txtRegUser);
         const errorForm = validateForm('#registerForm');
         if (!errorForm && !errorAlphaNumeric){
-            const url = 'https://reqres.in/api/register';
-            const mail = 'eve.holt@reqres.in';
-            const password = 'pistol';
-            const username = txtRegUser.value;
-            const newUser = {
-                username,
-                mail,
-                password
-            };
             if (txtRegPass.value == txtRegPass2.value) {
                 console.log(txtMail.value);
                 console.log(txtMail2.value);
                 if (txtMail.value == txtMail2.value) {
                     // full valid form next action
                     if (validateEmail(txtMail.value)) {
+                        const url = 'http://localhost/newUser';
+                        const mail = txtMail.value;
+                        const password = txtRegPass.value;
+                        const username = txtRegUser.value;
+                        const newUser = {
+                            username,
+                            password,
+                            mail
+                        };
                         const regNewUser = await axios.post(url,newUser);
-                        console.log(regNewUser);
+                        console.log(regNewUser.data.message);
+                        if (regNewUser.data.code == 200) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'User Successful registered',
+                                text: ''
+                              })                            
+                        } else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'User not registered',
+                                text: regNewUser.data.message
+                              }) 
+                        }
+
                     }else{
                         Swal.fire({
                             icon: 'error',
@@ -171,6 +221,20 @@ registerSubmit.addEventListener("click",(e)=>{
 
 loginSubmit.addEventListener('click',signinHandler);
 registerSubmit.addEventListener("click",signupHandler);
+
+// accountPanelLink.addEventListener('click',()=>{
+//     const auth = localStorage.getItem('auth');
+//     if (auth) {
+//         location.href = "panel-de-cuentas-lineage-hubble.html";
+//     }
+// })
+donationLink.addEventListener('click',()=>{
+    const auth = localStorage.getItem('auth');
+    if (auth) {
+        location.href = "panel-de-cuentas-lineage-hubble.html";
+    }
+})
+
 
 
 
