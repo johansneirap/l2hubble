@@ -8,7 +8,7 @@ const user = {
 };
 const getCharacters = async(username)=>{
     try {
-        const url = `http://localhost/getCharacters/${username}`;
+        const url = `http://34.199.191.171:5000/getCharacters/${username}`;
         const token = localStorage.getItem('access_token');
         const headers = {
             'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ const getCharacters = async(username)=>{
 }
 const getAccountInfo = async(username)=>{
     try {
-        const url = `http://localhost/getAccountInfo`;
+        const url = `http://34.199.191.171:5000/getAccountInfo`;
         const token = localStorage.getItem('access_token');
         const headers = {
             'Content-Type': 'application/json',
@@ -232,3 +232,134 @@ const logoutHandler = ()=>{
 
 const logoutSubmit = document.querySelector(".logoutSubmit");
 logoutSubmit.addEventListener('click', logoutHandler);
+
+const txtChangePasswordActual = document.getElementById('txtChangePasswordActual');
+const txtChangePasswordNew1 = document.getElementById('txtChangePasswordNew1');
+const txtChangePasswordNew2 = document.getElementById('txtChangePasswordNew2');
+const changePasswordSubmit = document.getElementById('changePasswordSubmit');
+const txtChangeMailActual = document.getElementById('txtChangeMailActual');
+const txtChangeMailNew1 = document.getElementById('txtChangeMailNew1');
+const txtChangeMailNew2 = document.getElementById('txtChangeMailNew2');
+const changeMailSubmit = document.getElementById('changeMailSubmit');
+
+
+const handleChangePassword = async ()=>{
+    try {
+        if (txtChangePasswordNew1.value == txtChangePasswordNew2.value) {
+            const url = 'http://34.199.191.171:5000/changePassword';
+            const username = localStorage.getItem('user');
+            const newPassword = txtChangePasswordNew1.value;
+            const oldPassword = txtChangePasswordActual.value;
+            const data = {
+                username,
+                oldPassword,
+                newPassword
+            };
+            const token = localStorage.getItem('access_token');
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+            const resp = await axios.post(url,data,{
+                headers:headers
+            });
+            console.log(resp.data);
+            if (resp.data.code == 200) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Done!',
+                    text: resp.data.message
+                    })                            
+            } else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: resp.data.message
+                    }) 
+            }
+        }else{
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'New passwords doesnt match'
+                }) 
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    clearInput(txtChangePasswordActual);
+    clearInput(txtChangePasswordNew1);
+    clearInput(txtChangePasswordNew2);
+}
+const handleChangeMail = async ()=>{
+    try {
+        if (validateEmail(txtChangeMailActual.value)) {
+            if (validateEmail(txtChangeMailNew1.value)) {
+                if (txtChangeMailNew1.value == txtChangeMailNew2.value) {
+                    const url = 'http://34.199.191.171:5000/changeEmail';
+                    const username = localStorage.getItem('user');
+                    const newEmail = txtChangeMailNew1.value;
+                    const data = {
+                        username,
+                        newEmail
+                    };
+                    const token = localStorage.getItem('access_token');
+                    const headers = {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                    const resp = await axios.post(url,data,{
+                        headers:headers
+                    });
+                    console.log(resp.data);
+                    if (resp.data.code == 200) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Done!',
+                            text: resp.data.message
+                            })                            
+                    } else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: resp.data.message
+                            }) 
+                    }
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'New mail fields doesnt match'
+                        }) 
+                }
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'New email field format is not valid'
+                  })
+            }
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Email actual field format is not valid'
+              })
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    clearInput(txtChangeMailActual);
+    clearInput(txtChangeMailNew1);
+    clearInput(txtChangeMailNew2);
+}
+const clearInput = (input)=>{
+    input.value = "";
+}
+changePasswordSubmit.addEventListener('click', handleChangePassword);
+changeMailSubmit.addEventListener('click', handleChangeMail);
+
+const validateEmail = (email)=>{
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}

@@ -12,7 +12,7 @@ window.onload = function () {
         $('#u12942-3').fadeOut();
         $('#u12957-4').fadeOut();
         $('#idUserAuth').html(user);
-    }else{
+    } else {
         $('#panelUserAuth').fadeOut();
     }
 }
@@ -37,15 +37,16 @@ const registerSubmit = document.querySelector(".registerSubmit");
 //handle the links to panel only with auth=true
 const accountPanelLink = document.getElementById('u178');
 const donationLink = document.getElementById('buttonu8980');
+const recoveryPassordLink = document.getElementById('recoveryPassordLink');
 
 let auth = localStorage.getItem('auth');
-const changePanelLink = (auth)=>{
+const changePanelLink = (auth) => {
     if (auth) {
-        accountPanelLink.setAttribute('href','panel-de-cuentas-lineage-hubble.html');
-        donationLink.setAttribute('href','panel-de-cuentas-lineage-hubble.html');  
-    }else{
-        accountPanelLink.setAttribute('href','index.html#registro');
-        donationLink.setAttribute('href','index.html#registro');
+        accountPanelLink.setAttribute('href', 'panel-de-cuentas-lineage-hubble.html');
+        donationLink.setAttribute('href', 'panel-de-cuentas-lineage-hubble.html');
+    } else {
+        accountPanelLink.setAttribute('href', 'index.html#registro');
+        donationLink.setAttribute('href', 'index.html#registro');
     }
 }
 // loginSubmit.addEventListener("click",()=>{
@@ -56,20 +57,20 @@ const changePanelLink = (auth)=>{
 //     const user = localStorage.getItem("user");
 //     console.log(user);
 // });
-const authUser = (txtUser)=>{
-    localStorage.setItem("user",txtUser.value);
-    localStorage.setItem('auth',true);
+const authUser = (txtUser) => {
+    localStorage.setItem("user", txtUser.value);
+    localStorage.setItem('auth', true);
 }
 
 const token = "";
 // signinHandler para manejar el inicio de sesion
-const signinHandler = async ()=>{
-    
+const signinHandler = async () => {
+
     try {
         const errorAlphaNumeric = validateAlphaNumeric(txtLoginUser);
         const errorForm = validateForm('#loginForm');
         if (!errorForm && !errorAlphaNumeric) {
-            const url = 'http://localhost/login';
+            const url = 'http://34.199.191.171:5000/login';
             const username = txtLoginUser.value;
             const password = txtLoginPass.value;
             const user = {
@@ -78,26 +79,26 @@ const signinHandler = async ()=>{
             };
             const config = {
                 headers: {
-                    'Content-Type':'application/json'
+                    'Content-Type': 'application/json'
                 }
             }
-            const authUser = await axios.post(url,user);
+            const authUser = await axios.post(url, user);
             console.log(authUser.data.code);
             if (authUser.data.code == 200) {
                 console.log(authUser.data.message);
                 auth = true;
-                localStorage.setItem("user",txtLoginUser.value);
-                localStorage.setItem('auth',true);
-                localStorage.setItem('access_token',authUser.data.access_token);
+                localStorage.setItem("user", txtLoginUser.value);
+                localStorage.setItem('auth', true);
+                localStorage.setItem('access_token', authUser.data.access_token);
                 console.log(localStorage.getItem('access_token'))
                 changePanelLink(auth);
                 location.href = "panel-de-cuentas-lineage-hubble.html";
-            }else{
+            } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Inicio de sesión incorrecto',
                     text: 'Credenciales inválidas'
-                  })
+                })
             }
         }
     } catch (error) {
@@ -105,69 +106,76 @@ const signinHandler = async ()=>{
         Swal.fire({
             icon: 'error',
             title: 'Error en inicio de sesion',
-            text: 'Usuario no encontrado'
-          })
+            text: ''
+        })
     }
 }
 
 // signupHandler par manejar el nuevo registro de usuarios (falta mostrar al usuario cuando tiene los campos vacios y cuando no pone signos alfanumericos)
-const signupHandler = async ()=>{
+const signupHandler = async () => {
     try {
         const errorAlphaNumeric = validateAlphaNumeric(txtRegUser);
         const errorForm = validateForm('#registerForm');
-        if (!errorForm && !errorAlphaNumeric){
+        if (!errorForm && !errorAlphaNumeric) {
             if (txtRegPass.value == txtRegPass2.value) {
-                console.log(txtMail.value);
-                console.log(txtMail2.value);
-                if (txtMail.value == txtMail2.value) {
-                    // full valid form next action
-                    if (validateEmail(txtMail.value)) {
-                        const url = 'http://localhost/newUser';
-                        const mail = txtMail.value;
-                        const password = txtRegPass.value;
-                        const username = txtRegUser.value;
-                        const newUser = {
-                            username,
-                            password,
-                            mail
-                        };
-                        const regNewUser = await axios.post(url,newUser);
-                        console.log(regNewUser.data.message);
-                        if (regNewUser.data.code == 200) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'User Successful registered',
-                                text: ''
-                              })                            
-                        } else{
+                if (txtRegPass.value.length >= 8) {
+                    console.log(txtMail.value);
+                    console.log(txtMail2.value);
+                    if (txtMail.value == txtMail2.value) {
+                        // full valid form next action
+                        if (validateEmail(txtMail.value)) {
+                            const url = 'http://34.199.191.171:5000/newUser';
+                            const mail = txtMail.value;
+                            const password = txtRegPass.value;
+                            const username = txtRegUser.value;
+                            const newUser = {
+                                username,
+                                password,
+                                mail
+                            };
+                            const regNewUser = await axios.post(url, newUser);
+                            console.log(regNewUser.data.message);
+                            if (regNewUser.data.code == 200) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'User Successful registered',
+                                    text: ''
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'User not registered',
+                                    text: regNewUser.data.message
+                                })
+                            }
+                        } else {
                             Swal.fire({
                                 icon: 'error',
-                                title: 'User not registered',
-                                text: regNewUser.data.message
-                              }) 
+                                title: 'Oops...',
+                                text: 'Email format is not valid'
+                            })
                         }
 
-                    }else{
+                    } else {
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Email format is not valid'
-                          })
+                            text: 'Both Email fields must match!'
+                        })
                     }
-                    
                 } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'Both Email fields must match!'
-                      })
+                        text: 'Password length must be longer than 7'
+                    })
                 }
-            }else{
+            } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Both Passwords fields must match!'
-                  })
+                })
             }
         }
     } catch (error) {
@@ -175,52 +183,52 @@ const signupHandler = async ()=>{
     }
 }
 
-const validateForm = (form)=>{
+const validateForm = (form) => {
 
     let error = false;
     let inputsRequired = document.querySelectorAll(`${form} [required]`);
     for (let i = 0; i < inputsRequired.length; i++) {
-        if (inputsRequired[i].value == ''){
+        if (inputsRequired[i].value == '') {
             inputsRequired[i].classList.add('input-error');
             const elementId = inputsRequired[i].id;
-            $(`#${elementId}`).notify("Input required",{ position:"right middle" });
+            $(`#${elementId}`).notify("Input required", { position: "right middle" });
             error = true;
-        }else{
+        } else {
             inputsRequired[i].classList.remove('input-error');
         }
     }
     return error;
 }
 
-const validateAlphaNumeric = (inputTxt)=>{
+const validateAlphaNumeric = (inputTxt) => {
     let error = false;
     const letters = /^[0-9a-zA-Z]+$/;
     if (!inputTxt.value.match(letters)) {
         error = true
-        $(`#${inputTxt.id}`).notify("Input must be alphanumerical",{ position:"right middle" });
-    } 
+        $(`#${inputTxt.id}`).notify("Input must be alphanumerical", { position: "right middle" });
+    }
     return error;
 }
-const validateEmail = (email)=>{
+const validateEmail = (email) => {
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
 
-const clearForm = ()=>{
+const clearForm = () => {
     txtLoginUser.value = "";
     txtLoginPass.value = "";
 }
-loginSubmit.addEventListener("click",(e)=>{
+loginSubmit.addEventListener("click", (e) => {
     e.preventDefault();
     signinHandler;
 });
-registerSubmit.addEventListener("click",(e)=>{
+registerSubmit.addEventListener("click", (e) => {
     e.preventDefault();
     signupHandler;
 });
 
-loginSubmit.addEventListener('click',signinHandler);
-registerSubmit.addEventListener("click",signupHandler);
+loginSubmit.addEventListener('click', signinHandler);
+registerSubmit.addEventListener("click", signupHandler);
 
 // accountPanelLink.addEventListener('click',()=>{
 //     const auth = localStorage.getItem('auth');
@@ -228,14 +236,14 @@ registerSubmit.addEventListener("click",signupHandler);
 //         location.href = "panel-de-cuentas-lineage-hubble.html";
 //     }
 // })
-donationLink.addEventListener('click',()=>{
+donationLink.addEventListener('click', () => {
     const auth = localStorage.getItem('auth');
     if (auth) {
         location.href = "panel-de-cuentas-lineage-hubble.html";
     }
 })
 
-const logoutHandler = ()=>{
+const logoutHandler = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('auth');
     localStorage.removeItem('access_token');
@@ -244,3 +252,140 @@ const logoutHandler = ()=>{
 
 const logoutSubmit = document.querySelector(".logoutSubmit");
 logoutSubmit.addEventListener('click', logoutHandler);
+
+
+const recoveryPasswordHandler = () => {
+    console.log('k pasa');
+    Swal.fire({
+        title: 'Enter your email',
+        text: 'We will send you a recovery code',
+        input: 'text',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Send',
+        showLoaderOnConfirm: true,
+        preConfirm: (email) => {
+            let data = {
+                email
+            }
+            console.log(JSON.stringify(data));
+            return fetch('//34.199.191.171:5000/recovery', {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: { "Content-type": "application/json; charset=UTF-8" }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                return response.json()
+            })
+            .catch(error => {
+                Swal.showValidationMessage(
+                    `Request failed: ${error}`
+                )
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        if (result.isConfirmed) {
+            console.log(result);
+            Swal.fire({
+                title: 'Multiple inputs',
+                html:'</br><p>Enter recovery code:</p>' +
+                  '<input id="swal-input1" type="text"  class="swal2-input">' +
+                  '<p>Enter your new password:</p>' +
+                  '<input id="swal-input2" type="password"  class="swal2-input">' +
+                  '<p>Repeat your new password:</p>' +
+                  '<input id="swal-input3" type="password"  class="swal2-input">',
+                focusConfirm: false,
+                preConfirm: () => {
+                    const swalPass2 = document.getElementById('swal-input2');
+                    const swalPass3 = document.getElementById('swal-input3');
+                    let data ={
+                        recoveryCode: document.getElementById('swal-input1').value,
+                        newPassword: swalPass2
+                    }
+                    if (swalPass2 == swalPass3) {
+                        return fetch('//34.199.191.171:5000/resetPassword', {
+                            method: "POST",
+                            body: JSON.stringify(data),
+                            headers: { "Content-type": "application/json; charset=UTF-8"}
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText)
+                            }
+                            return response.json()
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage(
+                                `Request failed: ${error}`
+                            )
+                        })
+                    }else{
+                        // throw new Error()
+                        // .catch(error =>{
+                        //     Swal.showValidationMessage(
+                        //         `ingresa bien la wea`
+                        //     )
+                        // })
+                    }
+                }
+            }).then((res) =>{
+                if (res.isConfirmed) {
+                    console.log(res);
+                    Swal.fire({
+                        title: 'Done!',
+                        icon: 'success',
+                        text:'Password has been updated'
+                    })
+                }
+            })
+        }
+    })
+}
+
+recoveryPassordLink.addEventListener('click', recoveryPasswordHandler);
+
+
+
+
+
+// Swal.mixin({
+//     confirmButtonText: 'Next step &rarr;',
+//     showCancelButton: false,
+//     showLoaderOnConfirm: true,
+//     progressSteps: ['1', '2']
+//   }).queue([
+//     {
+//       title: 'Enter the recovery code',
+//       text: 'Check your inbox',
+//       input: 'text',
+//     },
+//     {
+//         title:'Set new password',
+//         html:'<input id="swal-input1" type="password" class="swal2-input">' +
+//              '<input id="swal-input2" type="password" class="swal2-input">' +
+//              '<button id="btnTest" >Confirm</button>',
+//     }
+//   ]).then((result) => {
+//     if (result.value) {
+//       const answers = JSON.stringify(result.value)
+//       Swal.fire({
+//         icon:'success',
+//         title: 'All done!',
+//         html: `
+//           Your answers:
+//           <pre><code>${answers}</code></pre>
+//         `,
+//         confirmButtonText: 'Lovely!'
+//       })
+//     }
+//   })
+// const btnTest = document.getElementById('btnTest');
+// if (btnTest) {
+//     btnTest.addEventListener('click',()=>alert('k pasa realmente'));
+// }
