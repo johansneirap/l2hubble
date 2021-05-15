@@ -201,3 +201,23 @@ a:link, a:visited {
     border-radius: 5px;
     padding: 3px;
 }
+#l2hubble-span{
+    display: flex;
+    text-align: center;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    height: 72px;
+}
+#price-table{
+    margin-left: 4rem;
+    border: 1px solid black;
+}
+#price-table th, td{
+
+    padding: 10px;
+    font-size: 20px;
+}
+#price-table th{
+    font-weight: bold;
+}

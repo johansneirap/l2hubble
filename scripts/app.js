@@ -16,11 +16,6 @@ window.onload = function () {
         $('#panelUserAuth').fadeOut();
     }
 }
-
-
-
-console.log("no jala cabron");
-console.log('SI JALA TE LA CREISTE WE... JASDJSJDS');
 // inputs elements for login form
 const txtLoginUser = document.querySelector(".txt-login-user");
 const txtLoginPass = document.querySelector(".txt-login-pass");
@@ -255,31 +250,44 @@ logoutSubmit.addEventListener('click', logoutHandler);
 
 
 const recoveryPasswordHandler = () => {
-    console.log('k pasa');
     Swal.fire({
         title: 'Enter your email',
         text: 'We will send you a recovery code',
         input: 'text',
+        inputValidator: (value) => {
+            return new Promise((resolve) => {
+              if (value != '' && validateEmail(value)) {
+                resolve();
+              } else {
+                resolve('You have to enter a valid mail');
+              }
+            })},
         inputAttributes: {
             autocapitalize: 'off'
         },
         showCancelButton: true,
+        allowOutsideClick: false,
         confirmButtonText: 'Send',
         showLoaderOnConfirm: true,
         preConfirm: (email) => {
             let data = {
                 email
             }
-            console.log(JSON.stringify(data));
             return fetch('//34.199.191.171:5000/recovery', {
                 method: "POST",
                 body: JSON.stringify(data),
                 headers: { "Content-type": "application/json; charset=UTF-8" }
             })
             .then(response => {
+                console.log(response);
                 if (!response.ok) {
                     throw new Error(response.statusText)
                 }
+                // if (response.json().value.code == 400) {
+                //     Swal.showValidationMessage(
+                //         'Email was not found in database'
+                //     )
+                // }
                 return response.json()
             })
             .catch(error => {
@@ -287,28 +295,97 @@ const recoveryPasswordHandler = () => {
                     `Request failed: ${error}`
                 )
             })
-        },
-        allowOutsideClick: () => !Swal.isLoading()
+        }
     }).then((result) => {
         if (result.isConfirmed) {
-            console.log(result);
-            Swal.fire({
-                title: 'Multiple inputs',
-                html:'</br><p>Enter recovery code:</p>' +
-                  '<input id="swal-input1" type="text"  class="swal2-input">' +
-                  '<p>Enter your new password:</p>' +
-                  '<input id="swal-input2" type="password"  class="swal2-input">' +
-                  '<p>Repeat your new password:</p>' +
-                  '<input id="swal-input3" type="password"  class="swal2-input">',
-                focusConfirm: false,
-                preConfirm: () => {
-                    const swalPass2 = document.getElementById('swal-input2');
-                    const swalPass3 = document.getElementById('swal-input3');
-                    let data ={
-                        recoveryCode: document.getElementById('swal-input1').value,
-                        newPassword: swalPass2
-                    }
-                    if (swalPass2 == swalPass3) {
+            if (result.value.code == 400) {
+                console.log('no tan rapido amiguito');
+                Swal.fire({
+                    icon:'error',
+                    text:'Email not registered'
+                }).then(()=>recoveryPasswordHandler());
+            }else{
+                console.log(result);
+                // Swal.fire({
+                //     title: 'Multiple inputs',
+                //     html:'</br><p>Enter recovery code:</p>' +
+                //       '<input id="swal-input1" type="text"  class="swal2-input">' +
+                //       '<p>Enter your new password:</p>' +
+                //       '<input id="swal-input2" type="password"  class="swal2-input">' +
+                //       '<p>Repeat your new password:</p>' +
+                //       '<input id="swal-input3" type="password"  class="swal2-input">',
+                //     focusConfirm: false,
+                //     preConfirm: () => {
+                //         const swalPass2 = document.getElementById('swal-input2');
+                //         const swalPass3 = document.getElementById('swal-input3');
+                //         let data ={
+                //             recoveryCode: document.getElementById('swal-input1').value,
+                //             newPassword: swalPass2
+                //         }
+                //         if (swalPass2 == swalPass3) {
+                //             return fetch('//34.199.191.171:5000/resetPassword', {
+                //                 method: "POST",
+                //                 body: JSON.stringify(data),
+                //                 headers: { "Content-type": "application/json; charset=UTF-8"}
+                //             })
+                //             .then(response => {
+                //                 if (!response.ok) {
+                //                     throw new Error(response.statusText)
+                //                 }
+                //                 return response.json()
+                //             })
+                //             .catch(error => {
+                //                 Swal.showValidationMessage(
+                //                     `Request failed: ${error}`
+                //                 )
+                //             })
+                //         }else{
+                //             // throw new Error()
+                //             // .catch(error =>{
+                //             //     Swal.showValidationMessage(
+                //             //         `ingresa bien la wea`
+                //             //     )
+                //             // })
+                //         }
+                //     }
+                // }).then((res) =>{
+                //     if (res.isConfirmed) {
+                //         console.log(res);
+                //         Swal.fire({
+                //             title: 'Done!',
+                //             icon: 'success',
+                //             text:'Password has been updated'
+                //         })
+                //     }
+                // })
+                modalRecoverPassword();
+            }
+        }
+    })
+}
+
+recoveryPassordLink.addEventListener('click', recoveryPasswordHandler);
+
+const modalRecoverPassword = ()=>{
+    Swal.fire({
+        title: 'Final step',
+        html:'</br><p>Enter recovery code:</p>' +
+          '<input id="swal-input1" type="text"  class="swal2-input">' +
+          '<p>Enter your new password:</p>' +
+          '<input id="swal-input2" type="password"  class="swal2-input">' +
+          '<p>Repeat your new password:</p>' +
+          '<input id="swal-input3" type="password"  class="swal2-input">',
+        focusConfirm: false,
+        preConfirm: () => {
+            // const swalRecoveryCode = document.getElementById('swal-input1');
+            const swalPass2 = document.getElementById('swal-input2');
+            const swalPass3 = document.getElementById('swal-input3');
+            let data ={
+                recoveryCode: document.getElementById('swal-input1').value,
+                newPassword: swalPass2.value
+            }
+                if (swalPass2.value !='') {
+                    if (swalPass2.value == swalPass3.value) {
                         return fetch('//34.199.191.171:5000/resetPassword', {
                             method: "POST",
                             body: JSON.stringify(data),
@@ -326,66 +403,36 @@ const recoveryPasswordHandler = () => {
                             )
                         })
                     }else{
-                        // throw new Error()
-                        // .catch(error =>{
-                        //     Swal.showValidationMessage(
-                        //         `ingresa bien la wea`
-                        //     )
-                        // })
+                        console.log('no tan rapido amiguito xd');
+                        Swal.fire({
+                            icon:'error',
+                            text:'Both password inputs must match!'
+                        }).then(()=>modalRecoverPassword());
                     }
-                }
-            }).then((res) =>{
-                if (res.isConfirmed) {
-                    console.log(res);
+                } else {
                     Swal.fire({
-                        title: 'Done!',
-                        icon: 'success',
-                        text:'Password has been updated'
-                    })
+                        icon:'error',
+                        text:'You have to enter a new password'
+                    }).then(()=>modalRecoverPassword());
                 }
-            })
+        }
+    }).then((res) =>{
+        if (res.isConfirmed) {
+            console.log(res.value)
+            if (res.value.code == 200) {
+                Swal.fire({
+                    title: 'Done!',
+                    icon: 'success',
+                    text:'Password has been updated'
+                })
+            }else{
+                console.log(res);
+                Swal.fire({
+                    title: 'Error!',
+                    icon: 'error',
+                    text:'Recovery code is not valid'
+                }).then(()=>modalRecoverPassword());
+            }
         }
     })
 }
-
-recoveryPassordLink.addEventListener('click', recoveryPasswordHandler);
-
-
-
-
-
-// Swal.mixin({
-//     confirmButtonText: 'Next step &rarr;',
-//     showCancelButton: false,
-//     showLoaderOnConfirm: true,
-//     progressSteps: ['1', '2']
-//   }).queue([
-//     {
-//       title: 'Enter the recovery code',
-//       text: 'Check your inbox',
-//       input: 'text',
-//     },
-//     {
-//         title:'Set new password',
-//         html:'<input id="swal-input1" type="password" class="swal2-input">' +
-//              '<input id="swal-input2" type="password" class="swal2-input">' +
-//              '<button id="btnTest" >Confirm</button>',
-//     }
-//   ]).then((result) => {
-//     if (result.value) {
-//       const answers = JSON.stringify(result.value)
-//       Swal.fire({
-//         icon:'success',
-//         title: 'All done!',
-//         html: `
-//           Your answers:
-//           <pre><code>${answers}</code></pre>
-//         `,
-//         confirmButtonText: 'Lovely!'
-//       })
-//     }
-//   })
-// const btnTest = document.getElementById('btnTest');
-// if (btnTest) {
-//     btnTest.addEventListener('click',()=>alert('k pasa realmente'));
-// }

@@ -6,6 +6,9 @@ const user = {
     numberCharacters:0,
     characters:[]
 };
+let topPvpChar = {};
+let topPkChar = {};
+let topClan = {};
 const getCharacters = async(username)=>{
     try {
         const url = `http://34.199.191.171:5000/getCharacters/${username}`;
@@ -17,14 +20,22 @@ const getCharacters = async(username)=>{
         const chars = await axios.get(url,{
             headers: headers
         });
+        console.log(chars);
         user.characters = chars.data.data;
         user.numberCharacters = chars.data.data.length;
         populateSelectInput(selectCharacters,user.characters);
-        console.log(chars);
-        console.log(user.numberCharacters);
         populateUserInfo();
     } catch (error) {
         console.log(error);
+        if (error.response.status == 401) {
+            Swal.fire({
+                icon:'error',
+                title:'Session expired',
+                text:'Please relogin'
+            }).then(()=>{
+                logoutHandler();
+            });
+        }
     }
 }
 const getAccountInfo = async(username)=>{
@@ -44,20 +55,48 @@ const getAccountInfo = async(username)=>{
         user.createdDate = response.data.createdIn;
         user.lastLogin = response.data.lastLogin;
         user.numberCharacters = user.characters.length;
+        const topClanList = await  getTopClans(5);
+        console.log(topClanList);
+        topClan = topClanList[0];
+        await getTopStatsServer();
+        populateTopStats('.topPkList','pk',30);
+        populateTopStats('.topPvpList','pvp',30);
         populateUserInfo();
+        populateTopsClans('.topClanList',30);
         $('#onloader').fadeOut();
         $('#page').removeClass('hidden');
     } catch (error) {
         console.log(error);
     }
 }
-
+const getTopStatsServer = async()=>{
+    topPvpChar = await getTops('pvp',1);
+    topPkChar = await getTops('pk',1);
+}
+const getTops = async(mode,qty)=>{
+    try {
+        const url = `http://34.199.191.171:5000/getTops/${mode}/${qty}`;
+        const response = await axios.get(url);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+const getTopClans = async (qty)=>{
+    try {
+        const url = `http://34.199.191.171:5000/getTopClans/${qty}`;
+        const response = await axios.get(url);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
 user.name = localStorage.getItem('user');
 console.log(user);
 const txtUsername = document.getElementById('user_name');
 
 getAccountInfo(localStorage.getItem('user'));
-getCharacters(user.name);
+getCharacters(localStorage.getItem('user'));
 
 // console.log(username);
 
@@ -113,10 +152,20 @@ const onlineTimeCounterChar = document.getElementById('onlineTimeCounterChar');
 
 const renderCharStat = (charName) =>{
     console.log(user.characters);
-    char = user.characters.find(char => char.char_name === charName);
+    const char = user.characters.find(char => char.char_name === charName);
+    console.log(char);
     nameChar.textContent = char.char_name;
+    titleChar.textContent = char.title;
+    createdInChar.textContent = char.create_date;
+    genderChar.textContent = char.gender;
+    pvpCountChar.textContent = char.pvp;
+    karmaCountChar.textContent = char.karma
+    clanChar.textContent = char.clan;
+    aliianceChar.textContent = char.alliance;
+    isNoble.textContent = '';
+    isHero.textContent = '';
     baseClassChar.textContent = char.class;
-    baseLevelChar.textContent = char.lev;
+    baseLevelChar.textContent = char.level;
     pkCountChar.textContent = char.pk;
 }
 
@@ -146,7 +195,7 @@ const linkChangeMail = document.getElementById('u12482-4');
 const linkTopPvp = document.getElementById('u13829-4');
 const linkTopPk = document.getElementById('u13832-4');
 const linkTopClan = document.getElementById('u13835-4');
-const linkBossJewells = document.getElementById('u13838-4');
+// const linkBossJewells = document.getElementById('u13838-4');
 console.log(linkUserInfo);
 //array of elements link
 const linksArr = [
@@ -158,8 +207,7 @@ const linksArr = [
     linkChangeMail,
     linkTopPvp,
     linkTopPk,
-    linkTopClan,
-    linkBossJewells
+    linkTopClan
 ]
 
 //event listeners 
@@ -172,10 +220,50 @@ linkHistoryDonation.addEventListener('click',()=> displayPanel('history-donation
 linkTransferDonation.addEventListener('click',()=> displayPanel('transfer-donation'));
 linkChangePass.addEventListener('click',()=> displayPanel('changePass'));
 linkChangeMail.addEventListener('click',()=> displayPanel('changeMail'));
-linkTopPvp.addEventListener('click',()=> displayPanel('topPvp'));
-linkTopPk.addEventListener('click',()=> displayPanel('topPk'));
-linkTopClan.addEventListener('click',()=> displayPanel('topClan'));
-linkBossJewells.addEventListener('click',()=> displayPanel('bossJewells'));
+linkTopPvp.addEventListener('click',()=> {
+    displayPanel('topPvp');
+});
+linkTopPk.addEventListener('click',()=>{
+    displayPanel('topPk');
+});
+const clearTable = (tableSelector)=>{
+    const table = document.querySelector(tableSelector);
+    table.innerHTML = '';
+}
+const populateTopStats = async(tableSelector,mode,qty)=>{
+    const topList = await getTops(mode,qty);
+    const table = document.querySelector(tableSelector);
+    for (let i = 0; i < topList.length; i++) { 
+        let tr = document.createElement('tr'); //Create 3 <tr> elements assigned to a unique variable BUT need a working alternative for 'tr[i]'
+        table.appendChild(tr); // Append to <table> node
+        let tdElementPos = document.createElement('td');
+        tdElementPos.innerHTML = `${[i+1]}.`;
+        tr.appendChild(tdElementPos);
+        for (let j = 0;j < 4; j++) {
+            let tdElement = document.createElement('td');
+            tdElement.innerHTML = Object.values(topList[i])[j];
+            tr.appendChild(tdElement);
+        }
+    }
+}
+const populateTopsClans = async(tableSelector,qty)=>{
+    const topList = await getTopClans(qty);
+    const table = document.querySelector(tableSelector);
+    for (let i = 0; i < topList.length; i++) { 
+        let tr = document.createElement('tr'); //Create 3 <tr> elements assigned to a unique variable BUT need a working alternative for 'tr[i]'
+        table.appendChild(tr); // Append to <table> node
+        let tdElementPos = document.createElement('td');
+        tdElementPos.innerHTML = `${[i+1]}.`;
+        tr.appendChild(tdElementPos);
+        for (let j = 0;j < 4; j++) {
+            let tdElement = document.createElement('td');
+            tdElement.innerHTML = Object.values(topList[i])[j];
+            tr.appendChild(tdElement);
+        }
+    }
+}
+linkTopClan.addEventListener('click',()=>displayPanel('topClan'));
+// linkBossJewells.addEventListener('click',()=> displayPanel('bossJewells'));
 
 //event listener for render char stats
 selectCharacters.addEventListener('change',e => {
@@ -206,8 +294,8 @@ const txtCountChars = document.getElementById('txtCountChars');
 const txtTopPvp = document.getElementById('txtTopPvp');
 const txtTopPk = document.getElementById('txtTopPk');
 const txtTopClan = document.getElementById('txtTopClan');
-const txtTopLvl = document.getElementById('txtTopLvl');
-const txtTopOnline = document.getElementById('txtTopOnline');
+// const txtTopLvl = document.getElementById('txtTopLvl');
+// const txtTopOnline = document.getElementById('txtTopOnline');
 
 console.log(txtCreatedDate);
 const populateUserInfo = ()=>{
@@ -216,11 +304,11 @@ const populateUserInfo = ()=>{
     txtCreatedDate.innerHTML = user.createdDate;
     txtLastLogin.innerHTML = user.lastLogin;
     txtCountChars.innerHTML = user.numberCharacters;
-    txtTopPvp.innerHTML = "topPvpChar";
-    txtTopPk.innerHTML = "topPkChar";
-    txtTopClan.innerHTML = "topClan";
-    txtTopLvl.innerHTML = "topLvlChar";
-    txtTopOnline.innerHTML = "topOnlineChar";
+    txtTopPvp.innerHTML = topPvpChar[0].char_name;
+    txtTopPk.innerHTML = topPkChar[0].char_name;
+    txtTopClan.innerHTML = topClan.clan_name;
+    // txtTopLvl.innerHTML = "topLvlChar";
+    // txtTopOnline.innerHTML = "topOnlineChar";
 }
 
 const logoutHandler = ()=>{
@@ -317,7 +405,8 @@ const handleChangeMail = async ()=>{
                             icon: 'success',
                             title: 'Done!',
                             text: resp.data.message
-                            })                            
+                            })
+                            .then(()=>location.href = "panel-de-cuentas-lineage-hubble.html")                            
                     } else{
                         Swal.fire({
                             icon: 'error',

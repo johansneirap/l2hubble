@@ -305,12 +305,6 @@
                 <p>TOP CLAN</p>
               </a>
             </div>
-            <div class="clearfix grpelem" id="u13838-4">
-              <!-- content -->
-              <a>
-                <p>BOSS JEWELS LOC.</p>
-              </a>
-            </div>
             <div class="clip_frame grpelem" id="u12819">
               <!-- image -->
               <img class="block" id="u12819_img" src="images/borde004.png?crc=76349480"
@@ -350,11 +344,10 @@
               <div class="box-info">
                 <h1>Top stats server</h1>
                 <div class="lines">
-                  <div>Top PVP <span id="txtTopPvp"></span></div>
-                  <div class="two">Top PK<span id="txtTopPk"></span></div>
-                  <div>Top Clan<span id="txtTopClan"></span></div>
-                  <div class="two">Top LVL<span id="txtTopLvl"></span></div>
-                  <div>Top online<span id="txtTopOnline"></span></div>
+                  <div class="two">Top PVP <span id="txtTopPvp"></span></div>
+                  <div >Top PK<span id="txtTopPk"></span></div>
+                  <div class="two">Top Clan<span id="txtTopClan"></span></div>
+                  <div id="l2hubble-span">L2 HUBBLE &#174;</div>
                 </div>
               </div>
             </div>
@@ -367,35 +360,69 @@
               <div class="container">
                 <div class="box">
                   <div class="lines">
-                    <div>Name: <span id="nameChar">nameChar</span></div>
-                    <div class="two">Title: <span id="titleChar">titleChar</span></div>
-                    <div>Created in:<span id="createdInChar">createdInChar</span></div>
-                    <div class="two">Online:<span id="isOnline">isOnline</span></div>
-                    <div>Base class:<span id="baseClassChar">baseClassChar</span></div>
-                    <div class="two">Sub 1:<span id="sub1Char">sub1Char</span></div>
-                    <div>Sub 2:<span id="sub2Char">sub2Char</span></div>
-                    <div class="two">Sub 3:<span id="sub3Char">sub3Char</span></div>
-                    <div>Base level:<span id="baseLevelChar">baseLevelChar</span></div>
+                    <div>Name: <span id="nameChar"></span></div>
+                    <div class="two">Title: <span id="titleChar"></span></div>
+                    <div>Created in:<span id="createdInChar"></span></div>
+                    <div class="two">Online:<span id="isOnline"></span></div>
+                    <div>Class:<span id="baseClassChar"></span></div>
+                    <div class="two">Level: <span id="baseLevelChar"></span></div>
+                    <div>Gender: <span id="genderChar"></span></div>
                   </div>
                 </div>
                 <div class="box">
                   <div class="lines">
-                    <div class="two">Gender: <span id="genderChar">genderChar</span></div>
-                    <div>PVP:<span id="pvpCountChar">pvpCountChar</span></div>
-                    <div class="two">PK:<span id="pkCountChar">pkCountChar</span></div>
-                    <div>Karma:<span id="karmaCountChar">karmaCountChar</span></div>
-                    <div class="two">Clan:<span id="clanChar">clanChar</span></div>
-                    <div>Alliance:<span id="aliianceChar">aliianceChar</span></div>
-                    <div class="two">Noble:<span id="isNoble">isNoble</span></div>
-                    <div>Hero:<span id="isHero">isHero</span></div>
-                    <div class="two">Online time:<span id="onlineTimeCounterChar">onlineTimeCounterChar</span></div>
+                    <div>PVP:<span id="pvpCountChar"></span></div>
+                    <div class="two">PK:<span id="pkCountChar"></span></div>
+                    <div>Karma:<span id="karmaCountChar"></span></div>
+                    <div class="two">Clan:<span id="clanChar"></span></div>
+                    <div>Alliance:<span id="aliianceChar"></span></div>
+                    <div class="two">Noble:<span id="isNoble"></span></div>
+                    <div>Hero:<span id="isHero"></span></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div id="make-donation" class="make-donation option-panel">
-            <h1 class="subtitle">MAKE A DONATION</h1>
+            <h1 class="subtitle">Contribute to the server</h1>
+            <div class="box-container">
+              <table id="price-table" style="width:50%">
+                <tr>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                </tr>
+                <tr>
+                  <td>800 CLP</td>
+                  <td>5 Tokens</td>
+                </tr>
+                <tr>
+                  <td>4000 CLP</td>
+                  <td>25 Tokens</td>
+                </tr>
+                <tr>
+                  <td>8000 CLP</td>
+                  <td>55 Tokens</td>
+                </tr>
+                <tr>
+                  <td>16000 CLP</td>
+                  <td>110 Tokens</td>
+                </tr>
+                <tr>
+                  <td>40000 CLP</td>
+                  <td>550 Tokens</td>
+                </tr>
+              </table>
+              <div>
+                <select name="" id="amountDonation">
+                  <option value="">800 CLP</option>
+                  <option value="">4000 CLP</option>
+                  <option value="">8000 CLP</option>
+                  <option value="">16000 CLP</option>
+                  <option value="">40000 CLP</option>
+                </select><br>
+                <img src="https://s3.amazonaws.com/static.khipu.com/buttons/2021/110x50-purple.png">
+              </div>
+            </div>
           </div>
           <div id="history-donation" class="option-panel">
             <h1 class="subtitle">HISTORY DONATION PANEL</h1>
@@ -432,6 +459,7 @@
           </div>
           <div id="transfer-donation" class="option-panel">
             <h1 class="subtitle">TRANSFER HUBBLE COINS</h1>
+            <div class="box-container">
             <div class="box-container-transfer">
               <div class="row">
                 <select name="" id="charSourceCoin">
@@ -458,6 +486,7 @@
               </div>
             </div>
           </div>
+        </div>
           <div id="changePass" class="option-panel">
             <h1 class="subtitle">CHANGE PASSWORD PANEL</h1>
             <div class="box-container">
@@ -494,61 +523,37 @@
           </div>
           <div id="topPvp" class="option-panel">
             <h1 class="subtitle">TOP PVP LIST PANEL</h1>
-            <table id="topList">
+            <table id="topList" class="topPvpList">
               <tr>
                 <th>Ranking</th>
                 <th>Nickname</th>
                 <th>Clan</th>
-              </tr>
-              <tr>
-                <td>1. </td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-              </tr>
-              <tr>
-                <td>2. </td>
-                <td>Christina Berglund</td>
-                <td>Sweden</td>
+                <th>PK</th>
+                <th>PVP</th>
               </tr>
             </table>
           </div>
           <div id="topPk" class="option-panel">
             <h1 class="subtitle">TOP PK LIST PANEL</h1>
-            <table id="topList">
+            <table id="topList" class="topPkList">
               <tr>
                 <th>Ranking</th>
                 <th>Nickname</th>
                 <th>Clan</th>
-              </tr>
-              <tr>
-                <td>1. </td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-              </tr>
-              <tr>
-                <td>2. </td>
-                <td>Christina Berglund</td>
-                <td>Sweden</td>
+                <th>PK</th>
+                <th>PVP</th>
               </tr>
             </table>
           </div>
           <div id="topClan" class="option-panel">
             <h1 class="subtitle">TOP CLAN LIST PANEL</h1>
-            <table id="topList">
+            <table id="topList" class="topClanList">
               <tr>
                 <th>Ranking</th>
                 <th>Clan Name</th>
                 <th>Alliance</th>
-              </tr>
-              <tr>
-                <td>1. </td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-              </tr>
-              <tr>
-                <td>2. </td>
-                <td>Christina Berglund</td>
-                <td>Sweden</td>
+                <th>Level</th>
+                <th>Leader</th>
               </tr>
             </table>
           </div>
