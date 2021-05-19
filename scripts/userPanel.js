@@ -452,3 +452,44 @@ const validateEmail = (email)=>{
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
+
+// donation panel
+
+
+const selectAmountDonation = document.getElementById('selectAmountDonation');
+const btnKhipu = document.querySelector('.btnKhipu');
+
+
+const payment = {
+    amount : "",
+    body : "",
+    id : "",
+    status : "",
+    url : ""
+}
+const handleBtnKhipu = ()=>{
+    let subject = 'TEST';
+    let currency = 'CLP';
+    let amount = selectAmountDonation.value;
+    postPayment(subject,currency,amount);
+}
+const postPayment = async (subject,currency,amount)=>{
+    // const url = `http://34.199.191.171:5000/post-payment/${subject}/${currency}/${amount}`;
+    const url = `http://localhost:5000/test-payment/${subject}/${currency}/${amount}`;
+    const response = await axios.get(url);
+    payment.id = response.data._payment_id;
+    payment.url = response.data._payment_url;
+    if (response) {
+        console.log(response);
+        window.open(response.data._payment_url);
+    }
+}
+
+const getStatusPayment = async(paymentId)=>{
+    // const url = `http://34.199.191.171:5000/status-payment/${paymentId}`;
+    const url = `http://localhost:5000/status-payment/${paymentId}`;
+    const response = await axios.get(url);
+
+}
+// event listener for donation panel
+btnKhipu.addEventListener('click', handleBtnKhipu )

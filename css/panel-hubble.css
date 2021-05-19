@@ -221,3 +221,6 @@ a:link, a:visited {
 #price-table th{
     font-weight: bold;
 }
+.btnKhipu:hover{
+    cursor: pointer;
+}
