@@ -9,9 +9,11 @@ const user = {
 let topPvpChar = {};
 let topPkChar = {};
 let topClan = {};
+
 const getCharacters = async(username)=>{
     try {
         const url = `http://34.199.191.171:5000/getCharacters/${username}`;
+        // const url = `http://localhost:5000/getCharacters/${username}`;
         const token = localStorage.getItem('access_token');
         const headers = {
             'Content-Type': 'application/json',
@@ -24,6 +26,7 @@ const getCharacters = async(username)=>{
         user.characters = chars.data.data;
         user.numberCharacters = chars.data.data.length;
         populateSelectInput(selectCharacters,user.characters);
+        populateSelectInput(selectCharDonation,user.characters);
         populateUserInfo();
     } catch (error) {
         console.log(error);
@@ -41,6 +44,7 @@ const getCharacters = async(username)=>{
 const getAccountInfo = async(username)=>{
     try {
         const url = `http://34.199.191.171:5000/getAccountInfo`;
+        // const url = `http://localhost:5000/getAccountInfo`;
         const token = localStorage.getItem('access_token');
         const headers = {
             'Content-Type': 'application/json',
@@ -65,6 +69,7 @@ const getAccountInfo = async(username)=>{
         populateTopsClans('.topClanList',30);
         $('#onloader').fadeOut();
         $('#page').removeClass('hidden');
+        checkPayment();
     } catch (error) {
         console.log(error);
     }
@@ -76,6 +81,7 @@ const getTopStatsServer = async()=>{
 const getTops = async(mode,qty)=>{
     try {
         const url = `http://34.199.191.171:5000/getTops/${mode}/${qty}`;
+        // const url = `http://localhost:5000/getTops/${mode}/${qty}`;
         const response = await axios.get(url);
         return response.data;
     } catch (error) {
@@ -85,6 +91,7 @@ const getTops = async(mode,qty)=>{
 const getTopClans = async (qty)=>{
     try {
         const url = `http://34.199.191.171:5000/getTopClans/${qty}`;
+        // const url = `http://localhost:5000/getTopClans/${qty}`;
         const response = await axios.get(url);
         return response.data;
     } catch (error) {
@@ -111,7 +118,6 @@ if (user.name) {
 const userInfoPanel = document.getElementById('user-info');
 const makeDonationPanel = document.getElementById('make-donation');
 const historyDonationPanel = document.getElementById('history-donation');
-const tranferDonationPanel = document.getElementById('transfer-donation');
 const changePassPanel = document.getElementById('changePass');
 const changeMailPanel = document.getElementById('changeMail');
 const topPvpPanel = document.getElementById('topPvp');
@@ -157,6 +163,7 @@ const renderCharStat = (charName) =>{
     nameChar.textContent = char.char_name;
     titleChar.textContent = char.title;
     createdInChar.textContent = char.create_date;
+    isOnline.textContent = char.isOnline;
     genderChar.textContent = char.gender;
     pvpCountChar.textContent = char.pvp;
     karmaCountChar.textContent = char.karma
@@ -174,7 +181,6 @@ const panelsArr = [
     userInfoPanel,
     makeDonationPanel,
     historyDonationPanel,
-    tranferDonationPanel,
     changePassPanel,
     changeMailPanel,
     topPvpPanel,
@@ -202,7 +208,6 @@ const linksArr = [
     linkUserInfo,
     linkMakeDonation,
     linkHistoryDonation,
-    linkTransferDonation,
     linkChangePass,
     linkChangeMail,
     linkTopPvp,
@@ -217,15 +222,10 @@ linkUserInfo2.addEventListener('click',()=>displayPanel('user-info'));
 linkUserInfo3.addEventListener('click',()=>displayPanel('user-info'));
 linkMakeDonation.addEventListener("click", ()=> displayPanel('make-donation'));
 linkHistoryDonation.addEventListener('click',()=> displayPanel('history-donation'));
-linkTransferDonation.addEventListener('click',()=> displayPanel('transfer-donation'));
 linkChangePass.addEventListener('click',()=> displayPanel('changePass'));
 linkChangeMail.addEventListener('click',()=> displayPanel('changeMail'));
-linkTopPvp.addEventListener('click',()=> {
-    displayPanel('topPvp');
-});
-linkTopPk.addEventListener('click',()=>{
-    displayPanel('topPk');
-});
+linkTopPvp.addEventListener('click',()=> displayPanel('topPvp'));
+linkTopPk.addEventListener('click',()=> displayPanel('topPk'));
 const clearTable = (tableSelector)=>{
     const table = document.querySelector(tableSelector);
     table.innerHTML = '';
@@ -335,6 +335,7 @@ const handleChangePassword = async ()=>{
     try {
         if (txtChangePasswordNew1.value == txtChangePasswordNew2.value) {
             const url = 'http://34.199.191.171:5000/changePassword';
+            // const url = 'http://localhost:5000/changePassword';
             const username = localStorage.getItem('user');
             const newPassword = txtChangePasswordNew1.value;
             const oldPassword = txtChangePasswordActual.value;
@@ -381,59 +382,51 @@ const handleChangePassword = async ()=>{
 }
 const handleChangeMail = async ()=>{
     try {
-        if (validateEmail(txtChangeMailActual.value)) {
-            if (validateEmail(txtChangeMailNew1.value)) {
-                if (txtChangeMailNew1.value == txtChangeMailNew2.value) {
-                    const url = 'http://34.199.191.171:5000/changeEmail';
-                    const username = localStorage.getItem('user');
-                    const newEmail = txtChangeMailNew1.value;
-                    const data = {
-                        username,
-                        newEmail
-                    };
-                    const token = localStorage.getItem('access_token');
-                    const headers = {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    }
-                    const resp = await axios.post(url,data,{
-                        headers:headers
-                    });
-                    console.log(resp.data);
-                    if (resp.data.code == 200) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Done!',
-                            text: resp.data.message
-                            })
-                            .then(()=>location.href = "panel-de-cuentas-lineage-hubble.html")                            
-                    } else{
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: resp.data.message
-                            }) 
-                    }
-                }else{
+        if (validateEmail(txtChangeMailNew1.value)) {
+            if (txtChangeMailNew1.value == txtChangeMailNew2.value) {
+                const url = 'http://34.199.191.171:5000/changeEmail';
+                const username = localStorage.getItem('user');
+                const newEmail = txtChangeMailNew1.value;
+                const data = {
+                    username,
+                    newEmail
+                };
+                const token = localStorage.getItem('access_token');
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+                const resp = await axios.post(url,data,{
+                    headers:headers
+                });
+                console.log(resp.data);
+                if (resp.data.code == 200) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Done!',
+                        text: resp.data.message
+                        })
+                        .then(()=>location.href = "panel-de-cuentas-lineage-hubble.html")                            
+                } else{
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'New mail fields doesnt match'
+                        text: resp.data.message
                         }) 
                 }
-            } else {
+            }else{
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'New email field format is not valid'
-                  })
+                    text: 'New mail fields doesnt match'
+                    }) 
             }
         } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Email actual field format is not valid'
-              })
+                text: 'New email field format is not valid'
+                })
         }
     } catch (error) {
         console.log(error);
@@ -457,6 +450,7 @@ const validateEmail = (email)=>{
 
 
 const selectAmountDonation = document.getElementById('selectAmountDonation');
+const selectCharDonation = document.getElementById('selectCharDonation');
 const btnKhipu = document.querySelector('.btnKhipu');
 
 
@@ -468,28 +462,88 @@ const payment = {
     url : ""
 }
 const handleBtnKhipu = ()=>{
-    let subject = 'TEST';
-    let currency = 'CLP';
     let amount = selectAmountDonation.value;
-    postPayment(subject,currency,amount);
+    postPayment(amount);
 }
-const postPayment = async (subject,currency,amount)=>{
+const postPayment = async (amount)=>{
     // const url = `http://34.199.191.171:5000/post-payment/${subject}/${currency}/${amount}`;
-    const url = `http://localhost:5000/test-payment/${subject}/${currency}/${amount}`;
-    const response = await axios.get(url);
+    const url = `http://34.199.191.171:5000/payment`;
+    const username = user.name;
+    const charactername = selectCharDonation.value;
+    const token = localStorage.getItem('access_token');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+    const data = {
+        username,
+        amount,
+        charactername
+    }
+    console.log(data)
+    if (data.charactername != 'Select a character' && data.charactername != ''){
+        const response = await axios.post(url,data,{
+            headers:headers
+        });
+    }else{
+        Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'A character must be selected'
+        }) 
+    }
+    // localStorage.setItem('payment_id',response.data._payment_id);
+    localStorage.setItem('status_payment','pending');
     payment.id = response.data._payment_id;
     payment.url = response.data._payment_url;
     if (response) {
         console.log(response);
-        window.open(response.data._payment_url);
+        window.location.href = response.data._payment_url;
     }
 }
 
 const getStatusPayment = async(paymentId)=>{
-    // const url = `http://34.199.191.171:5000/status-payment/${paymentId}`;
-    const url = `http://localhost:5000/status-payment/${paymentId}`;
+    const url = `http://34.199.191.171:5000/status-payment/${paymentId}`;
+    // const url = `http://localhost:5000/status-payment/${paymentId}`;
     const response = await axios.get(url);
 
 }
 // event listener for donation panel
 btnKhipu.addEventListener('click', handleBtnKhipu )
+console.log(selectCharDonation);
+console.log(user.characters);
+
+const checkPayment = async ()=>{
+    if (localStorage.getItem('status_payment') == 'pending') {
+        Swal.fire({
+            text:'Your payment will be validated',
+            icon: 'info',
+            title: 'Pending payment',
+            timer: 10000
+          })
+        //   peticion a backend para consultar estado del pago 
+    }
+    localStorage.removeItem('status_payment');
+    localStorage.removeItem('payment_id')
+}
+
+const getServerStatus = async()=>{
+    try {
+        const url = `http://34.199.191.171:5000/checkServerStatus`;
+        const response = await axios.get(url);
+        console.log('askjdhasikldjs');
+        if (response.data == 1){
+            console.log(response.data);
+            $('#u11098-2').html('ON');
+            $('#u11098-2').addClass('serverOn');
+        }else{
+            $('#u11098-2').html('Off');
+            $('#u11098-2').removeClass('serverOn');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+window.onload = function(){
+    getServerStatus();
+}

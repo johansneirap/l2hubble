@@ -293,12 +293,6 @@
                 <p>Cambiar E-mail</p>
               </a>
             </div>
-            <div class="clearfix grpelem" id="u12455-4">
-              <!-- content -->
-              <a>
-                <p>Transferir Hubble Token</p>
-              </a>
-            </div>
             <div class="clearfix grpelem" id="u13835-4">
               <!-- content -->
               <a>
@@ -412,14 +406,22 @@
                   <td>550 Tokens</td>
                 </tr>
               </table>
-              <div>
-                <select name="" id="selectAmountDonation">
+              <div class="prePurchase">
+                <select name="charDonation" id="selectCharDonation">
+                  <option value="">Select a character</option>
+                </select>
+                <select name="amountDonation" id="selectAmountDonation">
                   <option value="800">800 CLP</option>
                   <option value="4000">4000 CLP</option>
                   <option value="8000">8000 CLP</option>
                   <option value="16000">16000 CLP</option>
                   <option value="40000">40000 CLP</option>
                 </select><br>
+                <b> Summary:</b><br><br>
+                <p> Tokens:  <span id="tokenSpan"></span></p><br>
+                <p> Character: <span id="characterSpan"></span></p><br>
+                <p> Cost: <span id="costSpan"></span></p><br><br>
+                <p>Pagar con:</p>
                 <button class="btnKhipu">
                 <img src="https://s3.amazonaws.com/static.khipu.com/buttons/2021/110x50-purple.png">
               </button>
@@ -459,36 +461,7 @@
               </div>
             </div>
           </div>
-          <div id="transfer-donation" class="option-panel">
-            <h1 class="subtitle">TRANSFER HUBBLE COINS</h1>
-            <div class="box-container">
-            <div class="box-container-transfer">
-              <div class="row">
-                <select name="" id="charSourceCoin">
-                  <option value="">Select a character with coins</option>
-                  <option value="">charName</option>
-                </select>
-                <div>
-                  <b>Coins balance: </b>
-
-                </div>
-              </div>
-              <div class="row">
-                <select name="" id="charDestinationCoin">
-                  <option value="">Select a character destination for coins</option>
-                  <option value="">charName</option>
-                </select>
-              </div>
-              <div>
-                <b>Enter the amount to transfer: </b>
-                <input class="amount-to-transfer" type="text" />
-              </div>
-              <div class="row">
-                <button type="button" class="btn-form">Transfer</button>
-              </div>
-            </div>
-          </div>
-        </div>
+          
           <div id="changePass" class="option-panel">
             <h1 class="subtitle">CHANGE PASSWORD PANEL</h1>
             <div class="box-container">
@@ -509,9 +482,6 @@
           <div id="changeMail" class="option-panel">
             <h1 class="subtitle">CHANGE MAIL PANEL</h1>
             <div class="box-container">
-              <div class="row">
-                <input id="txtChangeMailActual" placeholder="Actual Mail" type="email">
-              </div>
               <div class="row">
                 <input id="txtChangeMailNew1" placeholder="New email" type="email">
               </div>

@@ -4,6 +4,7 @@ window.onload = function () {
     const userAuth = localStorage.getItem('auth');
     const user = localStorage.getItem('user');
     changePanelLink(userAuth);
+    getServerStatus();
     if (userAuth) {
         $('#u13809').fadeOut();
         $('#u13812').fadeOut();
@@ -12,8 +13,53 @@ window.onload = function () {
         $('#u12942-3').fadeOut();
         $('#u12957-4').fadeOut();
         $('#idUserAuth').html(user);
+        getAccountInfo(user);
     } else {
         $('#panelUserAuth').fadeOut();
+    }
+}
+
+const getServerStatus = async()=>{
+    try {
+        const url = `http://34.199.191.171:5000/checkServerStatus`;
+        const response = await axios.get(url);
+        console.log(response.data);
+        if (response.data == 1){
+            $('#u6477-2').html('ON');
+            $('#u6477-2').addClass('serverOn');
+        }else{
+            $('#u6477-2').html('Off');
+            $('#u6477-2').removeClass('serverOn');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+const getAccountInfo = async(user)=>{
+    try {
+        const url = `http://34.199.191.171:5000/getAccountInfo`;
+        // const url = `http://localhost:5000/getAccountInfo`;
+        const token = localStorage.getItem('access_token');
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+        const data = {"username":`${user}`};
+        const response = await axios.post(url, data , {
+            headers:headers
+        })
+        console.log(response);
+    } catch (error) {
+        console.log(error);
+        if (error.response.status == 401) {
+            Swal.fire({
+                icon:'error',
+                title:'Session expired',
+                text:'Please relogin'
+            }).then(()=>{
+                logoutHandler();
+            });
+        }
     }
 }
 // inputs elements for login form
@@ -66,6 +112,7 @@ const signinHandler = async () => {
         const errorForm = validateForm('#loginForm');
         if (!errorForm && !errorAlphaNumeric) {
             const url = 'http://34.199.191.171:5000/login';
+            // const url = 'http://localhost:5000/login';
             const username = txtLoginUser.value;
             const password = txtLoginPass.value;
             const user = {
@@ -106,7 +153,7 @@ const signinHandler = async () => {
     }
 }
 
-// signupHandler par manejar el nuevo registro de usuarios (falta mostrar al usuario cuando tiene los campos vacios y cuando no pone signos alfanumericos)
+// signupHandler par manejar el nuevo registro de usuarios
 const signupHandler = async () => {
     try {
         const errorAlphaNumeric = validateAlphaNumeric(txtRegUser);
@@ -114,12 +161,11 @@ const signupHandler = async () => {
         if (!errorForm && !errorAlphaNumeric) {
             if (txtRegPass.value == txtRegPass2.value) {
                 if (txtRegPass.value.length >= 8) {
-                    console.log(txtMail.value);
-                    console.log(txtMail2.value);
                     if (txtMail.value == txtMail2.value) {
                         // full valid form next action
                         if (validateEmail(txtMail.value)) {
                             const url = 'http://34.199.191.171:5000/newUser';
+                            // const url = 'http://localhost:5000/newUser';
                             const mail = txtMail.value;
                             const password = txtRegPass.value;
                             const username = txtRegUser.value;
@@ -129,7 +175,7 @@ const signupHandler = async () => {
                                 mail
                             };
                             const regNewUser = await axios.post(url, newUser);
-                            console.log(regNewUser.data.message);
+                            console.log(regNewUser.data);
                             if (regNewUser.data.code == 200) {
                                 Swal.fire({
                                     icon: 'success',
