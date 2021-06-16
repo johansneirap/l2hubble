@@ -52,11 +52,29 @@ a:link, a:visited {
     font-size: 14px;
     border-top: 1px solid rgba(0,0,0,0.2);
 }
+.lines > div button {
+    float: right;
+    font-family: OpenSansSemibold, Arial;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgb(66, 35, 35);
+    color: rgb(255, 255, 255);
+}
+.lines > div button:hover {
+    cursor: pointer;
+    background-color: rgba(66, 35, 35, 0.849);
+    color: rgb(255, 255, 255);
+}
+.lines > div i {
+    margin-left: 3rem;
+}
 .lines > div span {
     float: right;
     font-family: OpenSansSemibold, Arial;
     font-weight: bold;
 }
+
+
 .lines > div.two {
     background: rgba(0,0,0,0.05);
 }
@@ -231,4 +249,7 @@ a:link, a:visited {
     margin-right: 2%;
     padding: 0.5%;
     font-size: 16px;
+}
+.containerHistory{
+    padding :0 25%;
 }

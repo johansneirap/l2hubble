@@ -33,6 +33,9 @@ const getServerStatus = async()=>{
         }
     } catch (error) {
         console.log(error);
+        localStorage.removeItem('user');
+        localStorage.removeItem('auth');
+        localStorage.removeItem('access_token');
     }
 }
 const getAccountInfo = async(user)=>{

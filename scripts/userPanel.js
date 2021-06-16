@@ -531,7 +531,6 @@ const getServerStatus = async()=>{
     try {
         const url = `http://34.199.191.171:5000/checkServerStatus`;
         const response = await axios.get(url);
-        console.log('askjdhasikldjs');
         if (response.data == 1){
             console.log(response.data);
             $('#u11098-2').html('ON');
@@ -544,6 +543,21 @@ const getServerStatus = async()=>{
         console.log(error);
     }
 }
+
 window.onload = function(){
     getServerStatus();
 }
+let donations = {
+    
+};
+// const getDonations = ()=>{
+//     try {
+//         const url = `http://34.199.191.171:5000/getPayments`;
+//         const response = await axios.get(url).data;
+//         donations = response;
+        
+//     } catch (error) {
+//         console.log(error);
+//         console.log('No se pudo obtener informacion de las donaciones del servidor')
+//     }
+// }
