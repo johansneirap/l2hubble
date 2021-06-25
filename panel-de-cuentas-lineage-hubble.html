@@ -39,6 +39,8 @@
 
 */
 -->
+<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 
 <body class="museBGSize">
@@ -416,12 +418,12 @@
                   <option value="8000">8000 CLP</option>
                   <option value="16000">16000 CLP</option>
                   <option value="40000">40000 CLP</option>
-                </select><br>
+                </select><br><br>
                 <b> Summary:</b><br><br>
-                <p> Tokens:  <span id="tokenSpan"></span></p><br>
-                <p> Character: <span id="characterSpan"></span></p><br>
-                <p> Cost: <span id="costSpan"></span></p><br><br>
-                <p>Pagar con:</p>
+                <p> Tokens:  <b><span id="tokenSpan"></span></b></p>
+                <p> Character: <b><span id="characterSpan"></span></b></p>
+                <p> Cost: <b><span id="costSpan"></span></p></b><br><br>
+                <p>Pagar con:</p><br>
                 <button class="btnKhipu">
                 <img src="https://s3.amazonaws.com/static.khipu.com/buttons/2021/110x50-purple.png">
               </button>
@@ -433,9 +435,8 @@
             <div class="containerHistory">
               <div class="box-info">
                 <h1>Last donations made</h1>
-                <div class="lines">
-                  <div><b>donationID</b>   <i>19/09/2021</i> <button type="button">Details</button></div>
-                  <div class="two">Date: <span>donationAmount</span></div>
+                <div class="lines" id="historyDonationList">
+                  <div class="two headList"><span class="payment-id">Donation ID</span>  <i>Date</i></div>
                 </div>
               </div>
             </div>

@@ -72,6 +72,15 @@ const getAccountInfo = async(username)=>{
         checkPayment();
     } catch (error) {
         console.log(error);
+        if (error.response.status == 401) {
+            Swal.fire({
+                icon:'error',
+                title:'Session expired',
+                text:'Please relogin'
+            }).then(()=>{
+                logoutHandler();
+            });
+        }
     }
 }
 const getTopStatsServer = async()=>{
@@ -452,7 +461,34 @@ const validateEmail = (email)=>{
 const selectAmountDonation = document.getElementById('selectAmountDonation');
 const selectCharDonation = document.getElementById('selectCharDonation');
 const btnKhipu = document.querySelector('.btnKhipu');
+const tokenSpan =  document.getElementById('tokenSpan');
+const characterSpan = document.getElementById('characterSpan');
+const costSpan  = document.getElementById('costSpan');
+selectCharDonation.addEventListener("change",function (){
+    if (selectCharDonation.value != "Select a character"){
+        characterSpan.innerHTML = selectCharDonation.value;
+    }else {
+        characterSpan.innerHTML = "";
+    }
+})
+const arrTokenPrice = [{cost:800, token:5},
+    {cost:4000, token:25},
+    {cost:8000, token: 55},
+    {cost:16000, token: 110},
+    {cost:40000, token: 550}];
 
+selectAmountDonation.addEventListener("change",function (){
+    let tokenQty = 0;
+    if (selectAmountDonation.value != 0){
+        costSpan.innerHTML = selectAmountDonation.value;
+        for (let i = 0; i < arrTokenPrice.length; i++) {
+            if (arrTokenPrice[i].cost == selectAmountDonation.value )
+            tokenQty = arrTokenPrice[i].token;
+            
+        }
+        tokenSpan.innerHTML = tokenQty;
+    }
+})
 
 const payment = {
     amount : "",
@@ -482,9 +518,20 @@ const postPayment = async (amount)=>{
     }
     console.log(data)
     if (data.charactername != 'Select a character' && data.charactername != ''){
-        const response = await axios.post(url,data,{
-            headers:headers
-        });
+        try {
+            const response = await axios.post(url,data,{
+                headers:headers
+            });
+            localStorage.setItem('status_payment','pending');
+            payment.id = response.data._payment_id;
+            payment.url = response.data._payment_url;
+            if (response) {
+                console.log(response);
+                window.location.href = response.data._payment_url;
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }else{
         Swal.fire({
         icon: 'error',
@@ -493,13 +540,7 @@ const postPayment = async (amount)=>{
         }) 
     }
     // localStorage.setItem('payment_id',response.data._payment_id);
-    localStorage.setItem('status_payment','pending');
-    payment.id = response.data._payment_id;
-    payment.url = response.data._payment_url;
-    if (response) {
-        console.log(response);
-        window.location.href = response.data._payment_url;
-    }
+    
 }
 
 const getStatusPayment = async(paymentId)=>{
@@ -546,18 +587,89 @@ const getServerStatus = async()=>{
 
 window.onload = function(){
     getServerStatus();
+    getDonations();
 }
 let donations = {
     
 };
-// const getDonations = ()=>{
-//     try {
-//         const url = `http://34.199.191.171:5000/getPayments`;
-//         const response = await axios.get(url).data;
-//         donations = response;
-        
-//     } catch (error) {
-//         console.log(error);
-//         console.log('No se pudo obtener informacion de las donaciones del servidor')
-//     }
-// }
+const getDonations = async()=>{
+    try {
+        const url = `http://34.199.191.171:5000/getPayments`;
+        const username = user.name;
+        const token = localStorage.getItem('access_token');
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+        const data = {
+            username
+        }
+        const response = await axios.post(url,data,{
+            headers:headers
+        });
+        donations = response.data;
+        console.log(donations);
+        populateHistoryDonation(donations);
+    } catch (error) {
+        console.log(error);
+        console.log('No se pudo obtener informacion de las donaciones del servidor')
+    }
+}
+const populateHistoryDonation = (donations)=>{
+    const historyDonationList = document.getElementById('historyDonationList');
+    for (let i = 0; i < donations.length; i++) { 
+        let newDiv = document.createElement('div'); //Create 3 <tr> elements assigned to a unique variable BUT need a working alternative for 'tr[i]'
+        historyDonationList.appendChild(newDiv); // Append to <table> node
+        // let tdElementPos = document.createElement('td');
+        newDiv.innerHTML = `<span class="payment-id">${donations[i].payment_id}</span> <i>${donations[i].date}</i><button id="${donations[i].payment_id}" type="button">Details</button>`;
+        const button = document.getElementById(donations[i].payment_id);
+        button.addEventListener('click', function () {
+            Swal.fire({
+                title: `Details for <br><br>Donation Id: ${donations[i].payment_id}<br><br>`,
+                html: `<table id="detail-donation-table">
+                        <tr><td>Id: </td><td><b>${donations[i].payment_id}</b></td></tr>
+                        <tr><td>Date: </td><td><b>${donations[i].date}</b></td></tr>
+                        <tr><td>Character: </td><td><b>${donations[i].character_name}</b></td></tr>
+                        <tr><td>Amount: </td><td><b>${donations[i].amount}</b></td></tr>
+                        <tr><td>Token quantity: </td><td><b>${donations[i].token}</b></td></tr>
+                        </table>`,
+                footer: '<b>L2 HUBBLE &#174;</b>',
+                width:600
+                })  
+        })
+        console.log('k pasa aca');
+    //     tr.appendChild(tdElementPos);
+    //     for (let j = 0;j < 4; j++) {
+    //         let tdElement = document.createElement('td');
+    //         tdElement.innerHTML = Object.values(topList[i])[j];
+    //         tr.appendChild(tdElement);
+    //     }
+    }
+}
+
+//stripeeeeeeeee
+// Create an instance of the Stripe object with your publishable API key
+var stripe = Stripe("pk_test_51J5y6GLGRoTXAwQE2ptAVXEYrzQXHxl0IkkVeQn0cgLbfyor5S7jxSrEON1BEFFAlqNWtRdeIXs6SWwSiXXmWniU00NJ5tuhDZ");
+var checkoutButton = document.getElementById("checkout-button");
+checkoutButton.addEventListener("click", function () {
+  fetch("http://localhost:4242/create-checkout-session", {
+    method: "POST",
+  })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (session) {
+      return stripe.redirectToCheckout({ sessionId: session.id });
+    })
+    .then(function (result) {
+      // If redirectToCheckout fails due to a browser or network
+      // error, you should display the localized error message to your
+      // customer using error.message.
+      if (result.error) {
+        alert(result.error.message);
+      }
+    })
+    .catch(function (error) {
+      console.error("Error:", error);
+    });
+});

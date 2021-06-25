@@ -5,17 +5,17 @@ window.onload = function () {
     const user = localStorage.getItem('user');
     changePanelLink(userAuth);
     getServerStatus();
-    if (userAuth) {
-        $('#u13809').fadeOut();
-        $('#u13812').fadeOut();
-        $('#u13814').fadeOut();
-        $('#registerForm').fadeOut();
-        $('#u12942-3').fadeOut();
-        $('#u12957-4').fadeOut();
+    if (!userAuth) {
+        $('#panelUserAuth').addClass('hidden');
+    } else {
+        $('#u13809').addClass('hidden');
+        $('#u13812').addClass('hidden');
+        $('#u13814').addClass('hidden');
+        $('#registerForm').addClass('hidden');
+        $('#u12942-3').addClass('hidden');
+        $('#u12957-4').addClass('hidden');
         $('#idUserAuth').html(user);
         getAccountInfo(user);
-    } else {
-        $('#panelUserAuth').fadeOut();
     }
 }
 
@@ -33,6 +33,8 @@ const getServerStatus = async()=>{
         }
     } catch (error) {
         console.log(error);
+        $('#u6477-2').html('Off');
+        $('#u6477-2').removeClass('serverOn');
         localStorage.removeItem('user');
         localStorage.removeItem('auth');
         localStorage.removeItem('access_token');

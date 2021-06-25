@@ -59,6 +59,7 @@ a:link, a:visited {
     border-radius: 5px;
     background-color: rgb(66, 35, 35);
     color: rgb(255, 255, 255);
+    margin-top: 1%;
 }
 .lines > div button:hover {
     cursor: pointer;
@@ -67,6 +68,11 @@ a:link, a:visited {
 }
 .lines > div i {
     margin-left: 3rem;
+}
+.lines > div .payment-id {
+    min-width: 100px;
+    font-weight: bold;
+    float: left !important;
 }
 .lines > div span {
     float: right;
@@ -243,7 +249,8 @@ a:link, a:visited {
     cursor: pointer;
 }
 .prePurchase{
-
+    padding: 0 10%;
+    font-size: 20px;
 }
 #selectAmountDonation, #selectCharDonation{
     margin-right: 2%;
@@ -251,5 +258,18 @@ a:link, a:visited {
     font-size: 16px;
 }
 .containerHistory{
-    padding :0 25%;
+    padding :0 10%;
+}
+#detail-donation-table{
+    font-size: 10px !important;
+    text-align: left !important;
+    /* border: solid 1px rgb(51, 32, 32); */
+    border-radius: 15px !important;
+}
+.two i{
+    margin-left: 4rem !important;
+    text-align: center;
+}
+.headList{
+    font-weight: bold;
 }
