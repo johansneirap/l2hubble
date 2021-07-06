@@ -39,16 +39,18 @@
 
 */
 -->
-<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
-    <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 
 <body class="museBGSize">
   <div class="centered" id="onloader">
-    <div class="loadingio-spinner-eclipse-tifjr2smce"><div class="ldio-wtq1q3lv1er">
-       <div></div>
-       </div></div>
- </div>
+    <div class="loadingio-spinner-eclipse-tifjr2smce">
+      <div class="ldio-wtq1q3lv1er">
+        <div></div>
+      </div>
+    </div>
+  </div>
   <div class="clearfix hidden" id="page">
     <!-- group -->
     <div class="clearfix grpelem" id="pu11066">
@@ -341,7 +343,7 @@
                 <h1>Top stats server</h1>
                 <div class="lines">
                   <div class="two">Top PVP <span id="txtTopPvp"></span></div>
-                  <div >Top PK<span id="txtTopPk"></span></div>
+                  <div>Top PK<span id="txtTopPk"></span></div>
                   <div class="two">Top Clan<span id="txtTopClan"></span></div>
                   <div id="l2hubble-span">L2 HUBBLE &#174;</div>
                 </div>
@@ -420,13 +422,20 @@
                   <option value="40000">40000 CLP</option>
                 </select><br><br>
                 <b> Summary:</b><br><br>
-                <p> Tokens:  <b><span id="tokenSpan"></span></b></p>
+                <p> Tokens: <b><span id="tokenSpan"></span></b></p>
                 <p> Character: <b><span id="characterSpan"></span></b></p>
                 <p> Cost: <b><span id="costSpan"></span></p></b><br><br>
                 <p>Pagar con:</p><br>
-                <button class="btnKhipu">
-                <img src="https://s3.amazonaws.com/static.khipu.com/buttons/2021/110x50-purple.png">
-              </button>
+                <div class="payments-buttons">
+                  <div class="btnKhipuContainer">
+                    <button class="btnKhipu">
+                      <img src="https://s3.amazonaws.com/static.khipu.com/buttons/2021/110x50-purple.png">
+                    </button>
+                  </div>
+                  <div class="btnPaypal">
+                    <div id="paypal-button-container"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -436,13 +445,13 @@
               <div class="box-info">
                 <h1>Last donations made</h1>
                 <div class="lines" id="historyDonationList">
-                  <div class="two headList"><span class="payment-id">Donation ID</span>  <i>Date</i></div>
+                  <div class="two headList"><span class="payment-id">Donation ID</span> <i>Date</i></div>
                 </div>
               </div>
             </div>
             <br>
           </div>
-          
+
           <div id="changePass" class="option-panel">
             <h1 class="subtitle">CHANGE PASSWORD PANEL</h1>
             <div class="box-container">
@@ -641,6 +650,37 @@
     data-main="scripts/museconfig.js?crc=4286661555"
     onload="if (requirejs) requirejs.onError = function(requireType, requireModule) { if (requireType && requireType.toString && requireType.toString().indexOf && 0 <= requireType.toString().indexOf('#scripterror')) window.Muse.assets.check(); }"
     onerror="window.Muse.assets.check();"></script>
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=ATIlZ0ha4cjy4vOGO_t-e4wH5x8MXBLy9kaMdUWSMyT68yRxSfTQa3IKpWtDEI-jAz9RFEel-Iq2dkLz"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+    </script>
+  <script>
+    paypal.Buttons({
+      createOrder: function (data, actions) {
+        // This function sets up the details of the transaction, including the amount and line item details.
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              currency_code:'USD',
+              value: '1'
+            }
+          }]
+        });
+      },
+      onApprove: function (data, actions) {
+        // This function captures the funds from the transaction.
+        return actions.order.capture().then(function (details) {
+          // This function shows a transaction success message to your buyer.
+          Swal.fire({
+                icon:'success',
+                title:'Payment done!',
+                text:`Transaction completed by ${details.name}`
+            });
+          // alert('Transaction completed by ' + details.payer.name.given_name);
+        });
+      }
+    }).render('#paypal-button-container');
+  //This function displays Smart Payment Buttons on your web page.
+  </script>
 </body>
 
 </html>

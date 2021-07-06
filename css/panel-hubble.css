@@ -245,9 +245,6 @@ a:link, a:visited {
 #price-table th{
     font-weight: bold;
 }
-.btnKhipu:hover{
-    cursor: pointer;
-}
 .prePurchase{
     padding: 0 10%;
     font-size: 20px;
@@ -272,4 +269,21 @@ a:link, a:visited {
 }
 .headList{
     font-weight: bold;
+}
+.payments-buttons{
+    position: relative;
+}
+.btnPaypal{
+    display: inline-block;
+    margin-left: 30%;
+}
+.btnKhipuContainer{
+    display: inline-block;
+    position: absolute;
+    top:0;
+}
+.btnKhipu{
+}
+.btnKhipu:hover{
+    cursor: pointer;
 }
