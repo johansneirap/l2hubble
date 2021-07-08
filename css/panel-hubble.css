@@ -272,17 +272,29 @@ a:link, a:visited {
 }
 .payments-buttons{
     position: relative;
+    height: 55px;
 }
 .btnPaypal{
     display: inline-block;
     margin-left: 30%;
+    height: 55px;
 }
 .btnKhipuContainer{
     display: inline-block;
     position: absolute;
     top:0;
 }
+#paypal-button-container {
+    height: 55px !important;
+}
+.paypal-button{
+    height: 55px !important;
+}
 .btnKhipu{
+    background-color: #fff;
+}
+#imgKhipu{
+    border-radius: 5px;
 }
 .btnKhipu:hover{
     cursor: pointer;

@@ -415,11 +415,11 @@
                   <option value="">Select a character</option>
                 </select>
                 <select name="amountDonation" id="selectAmountDonation">
-                  <option value="800">800 CLP</option>
-                  <option value="4000">4000 CLP</option>
-                  <option value="8000">8000 CLP</option>
-                  <option value="16000">16000 CLP</option>
-                  <option value="40000">40000 CLP</option>
+                  <option value="800"   itemDescription="5 TOKENS" priceUSD="1">800 CLP</option>
+                  <option value="4000"  itemDescription="25 TOKENS" priceUSD="5">4000 CLP</option>
+                  <option value="8000"  itemDescription="55 TOKENS" priceUSD="10">8000 CLP</option>
+                  <option value="16000" itemDescription="110 TOKENS"  priceUSD="20">16000 CLP</option>
+                  <option value="40000" itemDescription="550 TOKENS "  priceUSD="50">40000 CLP</option>
                 </select><br><br>
                 <b> Summary:</b><br><br>
                 <p> Tokens: <b><span id="tokenSpan"></span></b></p>
@@ -429,7 +429,7 @@
                 <div class="payments-buttons">
                   <div class="btnKhipuContainer">
                     <button class="btnKhipu">
-                      <img src="https://s3.amazonaws.com/static.khipu.com/buttons/2021/110x50-purple.png">
+                      <img id="imgKhipu" src="https://s3.amazonaws.com/static.khipu.com/buttons/2021/110x50-purple.png">
                     </button>
                   </div>
                   <div class="btnPaypal">
@@ -654,14 +654,29 @@
     src="https://www.paypal.com/sdk/js?client-id=ATIlZ0ha4cjy4vOGO_t-e4wH5x8MXBLy9kaMdUWSMyT68yRxSfTQa3IKpWtDEI-jAz9RFEel-Iq2dkLz"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
     </script>
   <script>
+      // const selectCharDonation = document.getElementById('selectCharDonation');
+    
     paypal.Buttons({
+      style: {
+        shape: 'rect',
+        color: 'gold',
+        layout: 'horizontal',
+        label: 'paypal',
+        height: 50,
+        width: 110
+      },
       createOrder: function (data, actions) {
+        var selectedItemDescription = selectAmountDonation.options[selectAmountDonation.selectedIndex].getAttribute("itemDescription");
+        var selectedItemPrice = parseFloat(selectAmountDonation.options[selectAmountDonation.selectedIndex].getAttribute("priceUSD"));
+        if (selectCharDonation.value == 'Select a character') {
+          return ;
+        }
         // This function sets up the details of the transaction, including the amount and line item details.
         return actions.order.create({
           purchase_units: [{
             amount: {
               currency_code:'USD',
-              value: '1'
+              value: selectedItemPrice
             }
           }]
         });
