@@ -270,6 +270,9 @@ a:link, a:visited {
 .headList{
     font-weight: bold;
 }
+.prePurchase p{
+    line-height: 24px;
+}
 .payments-buttons{
     position: relative;
     height: 55px;
@@ -298,4 +301,16 @@ a:link, a:visited {
 }
 .btnKhipu:hover{
     cursor: pointer;
+}
+#ppu12580{
+    margin-top: 50px;
+}
+#tokenSpan{
+    margin-left: 2rem;
+}
+#characterSpan{
+    margin-left: 0.5rem;
+}
+#costSpan{
+    margin-left: 3.2rem;
 }

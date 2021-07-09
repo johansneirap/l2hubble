@@ -30,14 +30,16 @@ const getCharacters = async(username)=>{
         populateUserInfo();
     } catch (error) {
         console.log(error);
-        if (error.response.status == 401) {
-            Swal.fire({
-                icon:'error',
-                title:'Session expired',
-                text:'Please relogin'
-            }).then(()=>{
-                logoutHandler();
-            });
+        if (error.response) {
+            if (error.response.status == 401) {
+                Swal.fire({
+                    icon:'error',
+                    title:'Session expired',
+                    text:'Please relogin'
+                }).then(()=>{
+                    logoutHandler();
+                });
+            }
         }
     }
 }
@@ -63,6 +65,8 @@ const getAccountInfo = async(username)=>{
         console.log(topClanList);
         topClan = topClanList[0];
         await getTopStatsServer();
+        txtTopPvp.innerHTML = topPvpChar[0].char_name;
+        txtTopPk.innerHTML = topPkChar[0].char_name;
         populateTopStats('.topPkList','pk',30);
         populateTopStats('.topPvpList','pvp',30);
         populateUserInfo();
@@ -307,14 +311,14 @@ const txtTopClan = document.getElementById('txtTopClan');
 // const txtTopOnline = document.getElementById('txtTopOnline');
 
 console.log(txtCreatedDate);
-const populateUserInfo = ()=>{
+const populateUserInfo =()=>{
     txtUser.innerHTML = user.name;
     txtMail.innerHTML = user.mail;
     txtCreatedDate.innerHTML = user.createdDate;
     txtLastLogin.innerHTML = user.lastLogin;
     txtCountChars.innerHTML = user.numberCharacters;
-    txtTopPvp.innerHTML = topPvpChar[0].char_name;
-    txtTopPk.innerHTML = topPkChar[0].char_name;
+    // txtTopPvp.innerHTML = topPvpChar[0].char_name;
+    // txtTopPk.innerHTML = topPkChar[0].char_name;
     txtTopClan.innerHTML = topClan.clan_name;
     // txtTopLvl.innerHTML = "topLvlChar";
     // txtTopOnline.innerHTML = "topOnlineChar";
@@ -480,7 +484,7 @@ const arrTokenPrice = [{cost:800, token:5},
 selectAmountDonation.addEventListener("change",function (){
     let tokenQty = 0;
     if (selectAmountDonation.value != 0){
-        costSpan.innerHTML = selectAmountDonation.value;
+        costSpan.innerHTML = `CLP ${selectAmountDonation.value}`;
         for (let i = 0; i < arrTokenPrice.length; i++) {
             if (arrTokenPrice[i].cost == selectAmountDonation.value )
             tokenQty = arrTokenPrice[i].token;
