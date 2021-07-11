@@ -5,9 +5,13 @@ window.onload = function () {
     const user = localStorage.getItem('user');
     changePanelLink(userAuth);
     getServerStatus();
+    populateTopTenClans('.top10Clanlist',10);
+    populateTopStats('.top10PvpList','pvp',10);
+    populateTopStats('.top10PkList','pk',10);
     if (!userAuth) {
         $('#panelUserAuth').addClass('hidden');
     } else {
+        $('#u12876-6').addClass('hidden');
         $('#u13809').addClass('hidden');
         $('#u13812').addClass('hidden');
         $('#u13814').addClass('hidden');
@@ -486,4 +490,57 @@ const modalRecoverPassword = ()=>{
             }
         }
     })
+}
+const getTopClans = async (qty)=>{
+    try {
+        const url = `http://34.199.191.171:5000/getTopClans/${qty}`;
+        // const url = `http://localhost:5000/getTopClans/${qty}`;
+        const response = await axios.get(url);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+const populateTopTenClans = async(tableSelector,qty)=>{
+    const topList = await getTopClans(qty);
+    console.log(topList);
+    const table = document.querySelector(tableSelector);
+    for (let i = 0; i < topList.length; i++) { 
+        let tr = document.createElement('tr'); //Create 3 <tr> elements assigned to a unique variable BUT need a working alternative for 'tr[i]'
+        table.appendChild(tr); // Append to <table> node
+        let tdElementPos = document.createElement('td');
+        tdElementPos.innerHTML = `${[i+1]}.`;
+        tr.appendChild(tdElementPos);
+        for (let j = 0;j < 1; j++) {
+            let tdElement = document.createElement('td');
+            tdElement.innerHTML = Object.values(topList[i])[j+3];
+            tr.appendChild(tdElement);
+        }
+    }
+}
+const getTopTens = async(mode,qty)=>{
+    try {
+        const url = `http://34.199.191.171:5000/getTops/${mode}/${qty}`;
+        // const url = `http://localhost:5000/getTops/${mode}/${qty}`;
+        const response = await axios.get(url);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+const populateTopStats = async(tableSelector,mode,qty)=>{
+    const topList = await getTopTens(mode,qty);
+    const table = document.querySelector(tableSelector);
+    for (let i = 0; i < topList.length; i++) { 
+        let tr = document.createElement('tr'); //Create 3 <tr> elements assigned to a unique variable BUT need a working alternative for 'tr[i]'
+        table.appendChild(tr); // Append to <table> node
+        let tdElementPos = document.createElement('td');
+        tdElementPos.innerHTML = `${[i+1]}.`;
+        tr.appendChild(tdElementPos);
+        for (let j = 0;j < 1; j++) {
+            let tdElement = document.createElement('td');
+            tdElement.innerHTML = Object.values(topList[i])[j];
+            tr.appendChild(tdElement);
+        }
+    }
 }

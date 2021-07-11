@@ -43,6 +43,8 @@ a:visited,a:link, a:hover {
 #idUserAuth{
   color: #ffffff;
   font-size: 2em;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 #u14699-4,#u14702-4,#u14705-4{
@@ -111,4 +113,16 @@ a:visited,a:link, a:hover {
 
 .serverOn {
   color: chartreuse !important;
+}
+#u13806{
+  /* width: 14rem !important; */
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  text-align: center;
+}
+#u12942-3{
+  display: none !important;
+}
+#u12957-4{
+  margin-top: -4rem !important;
 }
