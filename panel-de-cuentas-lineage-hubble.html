@@ -654,8 +654,8 @@
     src="https://www.paypal.com/sdk/js?client-id=ATIlZ0ha4cjy4vOGO_t-e4wH5x8MXBLy9kaMdUWSMyT68yRxSfTQa3IKpWtDEI-jAz9RFEel-Iq2dkLz"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
     </script>
   <script>
-      // const selectCharDonation = document.getElementById('selectCharDonation');
-    
+    let amount = selectAmountDonation.options[selectAmountDonation.selectedIndex].getAttribute("priceUSD");
+    console.log(amount);
     paypal.Buttons({
       style: {
         shape: 'rect',
@@ -693,6 +693,8 @@
         // This function captures the funds from the transaction.
         return actions.order.capture().then(function (details) {
           // This function shows a transaction success message to your buyer.
+          console.log(details);
+          postPaymentPaypal(details.id,amount);
           Swal.fire({
                 icon:'success',
                 title:'Payment done!',

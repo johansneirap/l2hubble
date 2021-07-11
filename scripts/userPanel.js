@@ -503,9 +503,9 @@ const payment = {
 }
 const handleBtnKhipu = ()=>{
     let amount = selectAmountDonation.value;
-    postPayment(amount);
+    postPaymentKhipu(amount);
 }
-const postPayment = async (amount)=>{
+const postPaymentKhipu = async (amount)=>{
     // const url = `http://34.199.191.171:5000/post-payment/${subject}/${currency}/${amount}`;
     const url = `http://34.199.191.171:5000/payment`;
     const username = user.name;
@@ -652,3 +652,28 @@ const populateHistoryDonation = (donations)=>{
 }
 
 //paypal
+const postPaymentPaypal = async (orderid,amount)=>{
+    const url = `http://34.199.191.171:5000/paypalListener`;
+    const username = user.name;
+    const charactername = selectCharDonation.value;
+    const token = localStorage.getItem('access_token');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+    const data = {
+        username,
+        amount,
+        charactername,
+        orderid
+    }
+    console.log(data);
+    try {
+        await axios.post(url,data,{
+            headers:headers
+        });
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
