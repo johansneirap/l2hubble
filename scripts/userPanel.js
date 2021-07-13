@@ -652,7 +652,7 @@ const populateHistoryDonation = (donations)=>{
 }
 
 //paypal
-const postPaymentPaypal = async (orderid,amount)=>{
+const postPaymentPaypal = async (orderid, amount)=>{
     const url = `http://34.199.191.171:5000/paypalListener`;
     const username = user.name;
     const charactername = selectCharDonation.value;
