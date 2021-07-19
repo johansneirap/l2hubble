@@ -390,10 +390,6 @@
                   <th>Quantity</th>
                 </tr>
                 <tr>
-                  <td>800 CLP</td>
-                  <td>5 Tokens</td>
-                </tr>
-                <tr>
                   <td>4000 CLP</td>
                   <td>25 Tokens</td>
                 </tr>
@@ -415,7 +411,7 @@
                   <option value="">Select a character</option>
                 </select>
                 <select name="amountDonation" id="selectAmountDonation">
-                  <option value="800"   itemDescription="5 TOKENS" priceUSD="1">800 CLP</option>
+                  <option value=""   >Amount to contribute</option>
                   <option value="4000"  itemDescription="25 TOKENS" priceUSD="5">4000 CLP</option>
                   <option value="8000"  itemDescription="55 TOKENS" priceUSD="10">8000 CLP</option>
                   <option value="16000" itemDescription="110 TOKENS"  priceUSD="20">16000 CLP</option>
@@ -667,7 +663,8 @@
       createOrder: function (data, actions) {
         var selectedItemDescription = selectAmountDonation.options[selectAmountDonation.selectedIndex].getAttribute("itemDescription");
         var selectedItemPrice = parseFloat(selectAmountDonation.options[selectAmountDonation.selectedIndex].getAttribute("priceUSD"));
-        if (selectCharDonation.value != '' && selectCharDonation.value != 'Select a character') {
+
+        if (selectCharDonation.value != '' && selectCharDonation.value != 'Select a character' && selectAmountDonation.value != '') {
           return actions.order.create({
           purchase_units: [{
             amount: {
@@ -680,7 +677,7 @@
           Swal.fire({
                 icon:'error',
                 title:'Error',
-                text:`A character must be selected`
+                text:`A character and amount must be selected`
             });
         }
         console.log(selectCharDonation.value);

@@ -1,3 +1,7 @@
+window.onload = function(){
+    getServerStatus();
+    getDonations();
+}
 const user = {
     name:"",
     mail:"",
@@ -521,6 +525,13 @@ const postPaymentKhipu = async (amount)=>{
         charactername
     }
     console.log(data)
+    if (amount == '') {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An amount must be selected'
+            }) 
+    }
     if (data.charactername != 'Select a character' && data.charactername != ''){
         try {
             const response = await axios.post(url,data,{
@@ -543,6 +554,7 @@ const postPaymentKhipu = async (amount)=>{
         text: 'A character must be selected'
         }) 
     }
+    
     // localStorage.setItem('payment_id',response.data._payment_id);
     
 }
@@ -589,10 +601,6 @@ const getServerStatus = async()=>{
     }
 }
 
-window.onload = function(){
-    getServerStatus();
-    getDonations();
-}
 let donations = {
     
 };

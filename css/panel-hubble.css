@@ -239,7 +239,7 @@ a:link, a:visited {
 }
 #price-table th, td{
 
-    padding: 10px;
+    padding-left: 10px;
     font-size: 20px;
 }
 #price-table th{
