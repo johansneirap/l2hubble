@@ -274,7 +274,7 @@ const populateTopsClans = async(tableSelector,qty)=>{
         tr.appendChild(tdElementPos);
         for (let j = 0;j < 4; j++) {
             let tdElement = document.createElement('td');
-            tdElement.innerHTML = Object.values(topList[i])[j];
+            tdElement.innerHTML = Object.values(topList[i])[j ];
             tr.appendChild(tdElement);
         }
     }

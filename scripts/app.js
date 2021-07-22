@@ -147,17 +147,18 @@ const signinHandler = async () => {
             } else {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Inicio de sesión incorrecto',
-                    text: 'Credenciales inválidas'
+                    title: 'Login error',
+                    text: 'Invalid credentials'
                 })
+                clearForm();
             }
         }
     } catch (error) {
         console.log(error);
         Swal.fire({
             icon: 'error',
-            title: 'Error en inicio de sesion',
-            text: ''
+            title: 'Login error',
+            text: 'Server off'
         })
     }
 }
@@ -354,7 +355,6 @@ const recoveryPasswordHandler = () => {
     }).then((result) => {
         if (result.isConfirmed) {
             if (result.value.code == 400) {
-                console.log('no tan rapido amiguito');
                 Swal.fire({
                     icon:'error',
                     text:'Email not registered'
