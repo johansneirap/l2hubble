@@ -961,6 +961,7 @@
 }
 
 #buttonu6645:hover {
+    cursor: pointer;
     opacity: 1;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=100);
@@ -1034,6 +1035,7 @@
 }
 
 #buttonu8576:hover {
+    cursor: pointer;
     opacity: 1;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=100);
@@ -5146,6 +5148,7 @@
 }
 
 #buttonu8086:hover {
+    cursor: pointer;
     -webkit-opacity: 0.9999;
     -webkit-transition-duration: 1s;
     -webkit-transition-delay: 0s;
@@ -5357,6 +5360,7 @@
     margin: 0px -10000px 0px 0px;
     background: transparent url("../images/btn-red.png?crc=300055884") no-repeat center center;
     background-size: contain;
+    cursor: pointer;
 }
 
 #u8969-4 {
@@ -5403,6 +5407,7 @@
     margin: 0px -10000px 0px 0px;
     background: transparent url("../images/btn-red.png?crc=300055884") no-repeat center center;
     background-size: contain;
+    cursor: pointer;
 }
 
 #buttonu8968.ButtonSelected,
@@ -5974,6 +5979,7 @@ body {
     margin: 0px -10000px 0px 0px;
     background: transparent url("../images/icon-instagram-hubble-color.png?crc=4019771322") no-repeat center center;
     background-size: cover;
+    cursor: pointer;
 }
 
 #buttonu8087.ButtonSelected {
