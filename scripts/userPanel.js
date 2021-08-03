@@ -1,20 +1,20 @@
-window.onload = function(){
+window.onload = function() {
     getServerStatus();
     getDonations();
 }
 const user = {
-    name:"",
-    mail:"",
+    name: "",
+    mail: "",
     createdDate: "",
     lastLogin: "",
-    numberCharacters:0,
-    characters:[]
+    numberCharacters: 0,
+    characters: []
 };
 let topPvpChar = {};
 let topPkChar = {};
 let topClan = {};
 
-const getCharacters = async(username)=>{
+const getCharacters = async(username) => {
     try {
         const url = `http://34.199.191.171:5000/getCharacters/${username}`;
         // const url = `http://localhost:5000/getCharacters/${username}`;
@@ -23,31 +23,31 @@ const getCharacters = async(username)=>{
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         }
-        const chars = await axios.get(url,{
+        const chars = await axios.get(url, {
             headers: headers
         });
         console.log(chars);
         user.characters = chars.data.data;
         user.numberCharacters = chars.data.data.length;
-        populateSelectInput(selectCharacters,user.characters);
-        populateSelectInput(selectCharDonation,user.characters);
+        populateSelectInput(selectCharacters, user.characters);
+        populateSelectInput(selectCharDonation, user.characters);
         populateUserInfo();
     } catch (error) {
         console.log(error);
         if (error.response) {
             if (error.response.status == 401) {
                 Swal.fire({
-                    icon:'error',
-                    title:'Session expired',
-                    text:'Please relogin'
-                }).then(()=>{
+                    icon: 'error',
+                    title: 'Session expired',
+                    text: 'Please relogin'
+                }).then(() => {
                     logoutHandler();
                 });
             }
         }
     }
 }
-const getAccountInfo = async(username)=>{
+const getAccountInfo = async(username) => {
     try {
         const url = `http://34.199.191.171:5000/getAccountInfo`;
         // const url = `http://localhost:5000/getAccountInfo`;
@@ -56,25 +56,25 @@ const getAccountInfo = async(username)=>{
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         }
-        const data = {"username":`${username}`};
-        const response = await axios.post(url, data , {
-            headers:headers
+        const data = { "username": `${username}` };
+        const response = await axios.post(url, data, {
+            headers: headers
         })
         console.log(response);
-        user.mail= response.data.email;
+        user.mail = response.data.email;
         user.createdDate = response.data.createdIn;
         user.lastLogin = response.data.lastLogin;
         user.numberCharacters = user.characters.length;
-        const topClanList = await  getTopClans(5);
+        const topClanList = await getTopClans(5);
         console.log(topClanList);
         topClan = topClanList[0];
         await getTopStatsServer();
         txtTopPvp.innerHTML = topPvpChar[0].char_name;
         txtTopPk.innerHTML = topPkChar[0].char_name;
-        populateTopStats('.topPkList','pk',30);
-        populateTopStats('.topPvpList','pvp',30);
+        populateTopStats('.topPkList', 'pk', 30);
+        populateTopStats('.topPvpList', 'pvp', 30);
         populateUserInfo();
-        populateTopsClans('.topClanList',30);
+        populateTopsClans('.topClanList', 30);
         $('#onloader').fadeOut();
         $('#page').removeClass('hidden');
         checkPayment();
@@ -82,20 +82,20 @@ const getAccountInfo = async(username)=>{
         console.log(error);
         if (error.response.status == 401) {
             Swal.fire({
-                icon:'error',
-                title:'Session expired',
-                text:'Please relogin'
-            }).then(()=>{
+                icon: 'error',
+                title: 'Session expired',
+                text: 'Please relogin'
+            }).then(() => {
                 logoutHandler();
             });
         }
     }
 }
-const getTopStatsServer = async()=>{
-    topPvpChar = await getTops('pvp',1);
-    topPkChar = await getTops('pk',1);
+const getTopStatsServer = async() => {
+    topPvpChar = await getTops('pvp', 1);
+    topPkChar = await getTops('pk', 1);
 }
-const getTops = async(mode,qty)=>{
+const getTops = async(mode, qty) => {
     try {
         const url = `http://34.199.191.171:5000/getTops/${mode}/${qty}`;
         // const url = `http://localhost:5000/getTops/${mode}/${qty}`;
@@ -105,7 +105,7 @@ const getTops = async(mode,qty)=>{
         console.log(error)
     }
 }
-const getTopClans = async (qty)=>{
+const getTopClans = async(qty) => {
     try {
         const url = `http://34.199.191.171:5000/getTopClans/${qty}`;
         // const url = `http://localhost:5000/getTopClans/${qty}`;
@@ -126,7 +126,7 @@ getCharacters(localStorage.getItem('user'));
 
 if (user.name) {
     txtUsername.innerHTML = user.name.replace(/^\w/, (c) => c.toUpperCase());
-}else{
+} else {
     window.location.assign("index.html");
 }
 
@@ -144,16 +144,16 @@ const bossJewells = document.getElementById('bossJewells');
 
 const selectCharacters = document.getElementById('selectCharacters');
 
-const populateSelectInput = (select,array)=>{
-    for(var i = 0; i < array.length; i++) {
-        var opt = array[i];
-        var el = document.createElement("option");
-        el.textContent = opt.char_name;
-        el.value = opt.char_name;
-        select.appendChild(el);
+const populateSelectInput = (select, array) => {
+        for (var i = 0; i < array.length; i++) {
+            var opt = array[i];
+            var el = document.createElement("option");
+            el.textContent = opt.char_name;
+            el.value = opt.char_name;
+            select.appendChild(el);
+        }
     }
-}
-//instancing txt
+    //instancing txt
 const nameChar = document.getElementById('nameChar');
 const titleChar = document.getElementById('titleChar');
 const createdInChar = document.getElementById('createdInChar');
@@ -173,7 +173,7 @@ const isNoble = document.getElementById('isNoble');
 const isHero = document.getElementById('isHero');
 const onlineTimeCounterChar = document.getElementById('onlineTimeCounterChar');
 
-const renderCharStat = (charName) =>{
+const renderCharStat = (charName) => {
     console.log(user.characters);
     const char = user.characters.find(char => char.char_name === charName);
     console.log(char);
@@ -234,64 +234,64 @@ const linksArr = [
 
 //event listeners 
 //eventListener for clicks of links in account panel
-linkUserInfo.addEventListener('click',()=>displayPanel('user-info'));
-linkUserInfo2.addEventListener('click',()=>displayPanel('user-info'));
-linkUserInfo3.addEventListener('click',()=>displayPanel('user-info'));
-linkMakeDonation.addEventListener("click", ()=> displayPanel('make-donation'));
-linkHistoryDonation.addEventListener('click',()=> displayPanel('history-donation'));
-linkChangePass.addEventListener('click',()=> displayPanel('changePass'));
-linkChangeMail.addEventListener('click',()=> displayPanel('changeMail'));
-linkTopPvp.addEventListener('click',()=> displayPanel('topPvp'));
-linkTopPk.addEventListener('click',()=> displayPanel('topPk'));
-const clearTable = (tableSelector)=>{
+linkUserInfo.addEventListener('click', () => displayPanel('user-info'));
+linkUserInfo2.addEventListener('click', () => displayPanel('user-info'));
+linkUserInfo3.addEventListener('click', () => displayPanel('user-info'));
+linkMakeDonation.addEventListener("click", () => displayPanel('make-donation'));
+linkHistoryDonation.addEventListener('click', () => displayPanel('history-donation'));
+linkChangePass.addEventListener('click', () => displayPanel('changePass'));
+linkChangeMail.addEventListener('click', () => displayPanel('changeMail'));
+linkTopPvp.addEventListener('click', () => displayPanel('topPvp'));
+linkTopPk.addEventListener('click', () => displayPanel('topPk'));
+const clearTable = (tableSelector) => {
     const table = document.querySelector(tableSelector);
     table.innerHTML = '';
 }
-const populateTopStats = async(tableSelector,mode,qty)=>{
-    const topList = await getTops(mode,qty);
+const populateTopStats = async(tableSelector, mode, qty) => {
+    const topList = await getTops(mode, qty);
     const table = document.querySelector(tableSelector);
-    for (let i = 0; i < topList.length; i++) { 
+    for (let i = 0; i < topList.length; i++) {
         let tr = document.createElement('tr'); //Create 3 <tr> elements assigned to a unique variable BUT need a working alternative for 'tr[i]'
         table.appendChild(tr); // Append to <table> node
         let tdElementPos = document.createElement('td');
         tdElementPos.innerHTML = `${[i+1]}.`;
         tr.appendChild(tdElementPos);
-        for (let j = 0;j < 4; j++) {
+        for (let j = 0; j < 4; j++) {
             let tdElement = document.createElement('td');
             tdElement.innerHTML = Object.values(topList[i])[j];
             tr.appendChild(tdElement);
         }
     }
 }
-const populateTopsClans = async(tableSelector,qty)=>{
+const populateTopsClans = async(tableSelector, qty) => {
     const topList = await getTopClans(qty);
     const table = document.querySelector(tableSelector);
-    for (let i = 0; i < topList.length; i++) { 
+    for (let i = 0; i < topList.length; i++) {
         let tr = document.createElement('tr'); //Create 3 <tr> elements assigned to a unique variable BUT need a working alternative for 'tr[i]'
         table.appendChild(tr); // Append to <table> node
         let tdElementPos = document.createElement('td');
         tdElementPos.innerHTML = `${[i+1]}.`;
         tr.appendChild(tdElementPos);
-        for (let j = 0;j < 4; j++) {
+        for (let j = 0; j < 4; j++) {
             let tdElement = document.createElement('td');
-            tdElement.innerHTML = Object.values(topList[i])[j ];
+            tdElement.innerHTML = Object.values(topList[i])[j];
             tr.appendChild(tdElement);
         }
     }
 }
-linkTopClan.addEventListener('click',()=>displayPanel('topClan'));
+linkTopClan.addEventListener('click', () => displayPanel('topClan'));
 // linkBossJewells.addEventListener('click',()=> displayPanel('bossJewells'));
 
 //event listener for render char stats
-selectCharacters.addEventListener('change',e => {
+selectCharacters.addEventListener('change', e => {
     if (e.target.value != 'Select a character') {
         renderCharStat(e.target.value);
     }
-    
+
 });
 
 //function handler for toggle displays on panels UI
-const displayPanel = (id)=>{
+const displayPanel = (id) => {
     panelsArr.forEach(element => {
         if (element.id === `${id}`) {
             console.log(element.id);
@@ -315,7 +315,7 @@ const txtTopClan = document.getElementById('txtTopClan');
 // const txtTopOnline = document.getElementById('txtTopOnline');
 
 console.log(txtCreatedDate);
-const populateUserInfo =()=>{
+const populateUserInfo = () => {
     txtUser.innerHTML = user.name;
     txtMail.innerHTML = user.mail;
     txtCreatedDate.innerHTML = user.createdDate;
@@ -323,12 +323,12 @@ const populateUserInfo =()=>{
     txtCountChars.innerHTML = user.numberCharacters;
     // txtTopPvp.innerHTML = topPvpChar[0].char_name;
     // txtTopPk.innerHTML = topPkChar[0].char_name;
-    txtTopClan.innerHTML = topClan.clan_name;
+    txtTopClan.innerHTML = topClan.alliance_name;
     // txtTopLvl.innerHTML = "topLvlChar";
     // txtTopOnline.innerHTML = "topOnlineChar";
 }
 
-const logoutHandler = ()=>{
+const logoutHandler = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('auth');
     localStorage.removeItem('access_token');
@@ -348,7 +348,7 @@ const txtChangeMailNew2 = document.getElementById('txtChangeMailNew2');
 const changeMailSubmit = document.getElementById('changeMailSubmit');
 
 
-const handleChangePassword = async ()=>{
+const handleChangePassword = async() => {
     try {
         if (txtChangePasswordNew1.value == txtChangePasswordNew2.value) {
             const url = 'http://34.199.191.171:5000/changePassword';
@@ -366,8 +366,8 @@ const handleChangePassword = async ()=>{
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
-            const resp = await axios.post(url,data,{
-                headers:headers
+            const resp = await axios.post(url, data, {
+                headers: headers
             });
             console.log(resp.data);
             if (resp.data.code == 200) {
@@ -375,20 +375,20 @@ const handleChangePassword = async ()=>{
                     icon: 'success',
                     title: 'Done!',
                     text: resp.data.message
-                    })                            
-            } else{
+                })
+            } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
                     text: resp.data.message
-                    }) 
+                })
             }
-        }else{
+        } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
                 text: 'New passwords doesnt match'
-                }) 
+            })
         }
     } catch (error) {
         console.log(error);
@@ -397,7 +397,7 @@ const handleChangePassword = async ()=>{
     clearInput(txtChangePasswordNew1);
     clearInput(txtChangePasswordNew2);
 }
-const handleChangeMail = async ()=>{
+const handleChangeMail = async() => {
     try {
         if (validateEmail(txtChangeMailNew1.value)) {
             if (txtChangeMailNew1.value == txtChangeMailNew2.value) {
@@ -413,37 +413,37 @@ const handleChangeMail = async ()=>{
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
-                const resp = await axios.post(url,data,{
-                    headers:headers
+                const resp = await axios.post(url, data, {
+                    headers: headers
                 });
                 console.log(resp.data);
                 if (resp.data.code == 200) {
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Done!',
-                        text: resp.data.message
+                            icon: 'success',
+                            title: 'Done!',
+                            text: resp.data.message
                         })
-                        .then(()=>location.href = "panel-de-cuentas-lineage-hubble.html")                            
-                } else{
+                        .then(() => location.href = "panel-de-cuentas-lineage-hubble.html")
+                } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
                         text: resp.data.message
-                        }) 
+                    })
                 }
-            }else{
+            } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
                     text: 'New mail fields doesnt match'
-                    }) 
+                })
             }
         } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
                 text: 'New email field format is not valid'
-                })
+            })
         }
     } catch (error) {
         console.log(error);
@@ -452,13 +452,13 @@ const handleChangeMail = async ()=>{
     clearInput(txtChangeMailNew1);
     clearInput(txtChangeMailNew2);
 }
-const clearInput = (input)=>{
+const clearInput = (input) => {
     input.value = "";
 }
 changePasswordSubmit.addEventListener('click', handleChangePassword);
 changeMailSubmit.addEventListener('click', handleChangeMail);
 
-const validateEmail = (email)=>{
+const validateEmail = (email) => {
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
@@ -469,47 +469,48 @@ const validateEmail = (email)=>{
 const selectAmountDonation = document.getElementById('selectAmountDonation');
 const selectCharDonation = document.getElementById('selectCharDonation');
 const btnKhipu = document.querySelector('.btnKhipu');
-const tokenSpan =  document.getElementById('tokenSpan');
+const tokenSpan = document.getElementById('tokenSpan');
 const characterSpan = document.getElementById('characterSpan');
-const costSpan  = document.getElementById('costSpan');
-selectCharDonation.addEventListener("change",function (){
-    if (selectCharDonation.value != "Select a character"){
+const costSpan = document.getElementById('costSpan');
+selectCharDonation.addEventListener("change", function() {
+    if (selectCharDonation.value != "Select a character") {
         characterSpan.innerHTML = selectCharDonation.value;
-    }else {
+    } else {
         characterSpan.innerHTML = "";
     }
 })
-const arrTokenPrice = [{cost:800, token:5},
-    {cost:4000, token:25},
-    {cost:8000, token: 55},
-    {cost:16000, token: 110},
-    {cost:40000, token: 550}];
+const arrTokenPrice = [{ cost: 800, token: 5 },
+    { cost: 4000, token: 25 },
+    { cost: 8000, token: 55 },
+    { cost: 16000, token: 110 },
+    { cost: 40000, token: 550 }
+];
 
-selectAmountDonation.addEventListener("change",function (){
+selectAmountDonation.addEventListener("change", function() {
     let tokenQty = 0;
-    if (selectAmountDonation.value != 0){
+    if (selectAmountDonation.value != 0) {
         costSpan.innerHTML = `CLP ${selectAmountDonation.value}`;
         for (let i = 0; i < arrTokenPrice.length; i++) {
-            if (arrTokenPrice[i].cost == selectAmountDonation.value )
-            tokenQty = arrTokenPrice[i].token;
-            
+            if (arrTokenPrice[i].cost == selectAmountDonation.value)
+                tokenQty = arrTokenPrice[i].token;
+
         }
         tokenSpan.innerHTML = tokenQty;
     }
 })
 
 const payment = {
-    amount : "",
-    body : "",
-    id : "",
-    status : "",
-    url : ""
+    amount: "",
+    body: "",
+    id: "",
+    status: "",
+    url: ""
 }
-const handleBtnKhipu = ()=>{
+const handleBtnKhipu = () => {
     let amount = selectAmountDonation.value;
     postPaymentKhipu(amount);
 }
-const postPaymentKhipu = async (amount)=>{
+const postPaymentKhipu = async(amount) => {
     // const url = `http://34.199.191.171:5000/post-payment/${subject}/${currency}/${amount}`;
     const url = `http://34.199.191.171:5000/payment`;
     const username = user.name;
@@ -530,14 +531,14 @@ const postPaymentKhipu = async (amount)=>{
             icon: 'error',
             title: 'Error',
             text: 'An amount must be selected'
-            }) 
+        })
     }
-    if (data.charactername != 'Select a character' && data.charactername != ''){
+    if (data.charactername != 'Select a character' && data.charactername != '') {
         try {
-            const response = await axios.post(url,data,{
-                headers:headers
+            const response = await axios.post(url, data, {
+                headers: headers
             });
-            localStorage.setItem('status_payment','pending');
+            localStorage.setItem('status_payment', 'pending');
             payment.id = response.data._payment_id;
             payment.url = response.data._payment_url;
             if (response) {
@@ -547,54 +548,53 @@ const postPaymentKhipu = async (amount)=>{
         } catch (error) {
             console.log(error);
         }
-    }else{
+    } else {
         Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'A character must be selected'
-        }) 
+            icon: 'error',
+            title: 'Error',
+            text: 'A character must be selected'
+        })
     }
-    
+
     // localStorage.setItem('payment_id',response.data._payment_id);
-    
-}
-
-const getStatusPayment = async(paymentId)=>{
-    const url = `http://34.199.191.171:5000/status-payment/${paymentId}`;
-    // const url = `http://localhost:5000/status-payment/${paymentId}`;
-    const response = await axios.get(url);
 
 }
-// event listener for donation panel
-btnKhipu.addEventListener('click', handleBtnKhipu )
+
+const getStatusPayment = async(paymentId) => {
+        const url = `http://34.199.191.171:5000/status-payment/${paymentId}`;
+        // const url = `http://localhost:5000/status-payment/${paymentId}`;
+        const response = await axios.get(url);
+
+    }
+    // event listener for donation panel
+btnKhipu.addEventListener('click', handleBtnKhipu)
 console.log(selectCharDonation);
 console.log(user.characters);
 
-const checkPayment = async ()=>{
+const checkPayment = async() => {
     if (localStorage.getItem('status_payment') == 'pending') {
         Swal.fire({
-            text:'Your payment will be validated',
-            icon: 'info',
-            title: 'Pending payment',
-            timer: 10000
-          })
-        //   peticion a backend para consultar estado del pago 
+                text: 'Your payment will be validated',
+                icon: 'info',
+                title: 'Pending payment',
+                timer: 10000
+            })
+            //   peticion a backend para consultar estado del pago 
     }
     localStorage.removeItem('status_payment');
     localStorage.removeItem('payment_id')
 }
 
-const getServerStatus = async()=>{
+const getServerStatus = async() => {
     try {
         const url = `http://34.199.191.171:5000/checkServerStatus`;
         const response = await axios.get(url);
-        if (response.data == 1){
-            console.log(response.data);
-            $('#u11098-2').html('ON');
-            $('#u11098-2').addClass('serverOn');
-        }else{
-            $('#u11098-2').html('Off');
-            $('#u11098-2').removeClass('serverOn');
+        if (response.data == 1) {
+            $('#u6477-5').addClass('server-status-on');
+            $('#u6477-5').removeClass('server-status-off');
+        } else {
+            $('#u6477-5').addClass('server-status-off');
+            $('#u6477-5').removeClass('server-status-on');
         }
     } catch (error) {
         console.log(error);
@@ -602,9 +602,9 @@ const getServerStatus = async()=>{
 }
 
 let donations = {
-    
+
 };
-const getDonations = async()=>{
+const getDonations = async() => {
     try {
         const url = `http://34.199.191.171:5000/getPayments`;
         const username = user.name;
@@ -616,8 +616,8 @@ const getDonations = async()=>{
         const data = {
             username
         }
-        const response = await axios.post(url,data,{
-            headers:headers
+        const response = await axios.post(url, data, {
+            headers: headers
         });
         donations = response.data;
         console.log(donations);
@@ -627,15 +627,15 @@ const getDonations = async()=>{
         console.log('No se pudo obtener informacion de las donaciones del servidor')
     }
 }
-const populateHistoryDonation = (donations)=>{
+const populateHistoryDonation = (donations) => {
     const historyDonationList = document.getElementById('historyDonationList');
-    for (let i = 0; i < donations.length; i++) { 
+    for (let i = 0; i < donations.length; i++) {
         let newDiv = document.createElement('div'); //Create 3 <tr> elements assigned to a unique variable BUT need a working alternative for 'tr[i]'
         historyDonationList.appendChild(newDiv); // Append to <table> node
         // let tdElementPos = document.createElement('td');
         newDiv.innerHTML = `<span class="payment-id">${donations[i].payment_id}</span> <i>${donations[i].date}</i><button id="${donations[i].payment_id}" type="button">Details</button>`;
         const button = document.getElementById(donations[i].payment_id);
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function() {
             Swal.fire({
                 title: `Details for <br><br>Donation Id: ${donations[i].payment_id}<br><br>`,
                 html: `<table id="detail-donation-table">
@@ -646,21 +646,21 @@ const populateHistoryDonation = (donations)=>{
                         <tr><td>Token quantity: </td><td><b>${donations[i].token}</b></td></tr>
                         </table>`,
                 footer: '<b>L2 HUBBLE &#174;</b>',
-                width:600
-                })  
+                width: 600
+            })
         })
         console.log('k pasa aca');
-    //     tr.appendChild(tdElementPos);
-    //     for (let j = 0;j < 4; j++) {
-    //         let tdElement = document.createElement('td');
-    //         tdElement.innerHTML = Object.values(topList[i])[j];
-    //         tr.appendChild(tdElement);
-    //     }
+        //     tr.appendChild(tdElementPos);
+        //     for (let j = 0;j < 4; j++) {
+        //         let tdElement = document.createElement('td');
+        //         tdElement.innerHTML = Object.values(topList[i])[j];
+        //         tr.appendChild(tdElement);
+        //     }
     }
 }
 
 //paypal
-const postPaymentPaypal = async (orderid, amount)=>{
+const postPaymentPaypal = async(orderid, amount) => {
     const url = `http://34.199.191.171:5000/paypalListener`;
     const username = user.name;
     const charactername = selectCharDonation.value;
@@ -677,11 +677,11 @@ const postPaymentPaypal = async (orderid, amount)=>{
     }
     console.log(data);
     try {
-        await axios.post(url,data,{
-            headers:headers
+        await axios.post(url, data, {
+            headers: headers
         });
     } catch (error) {
         console.log(error);
     }
-    
+
 }

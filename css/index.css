@@ -1313,12 +1313,12 @@
 }
 
 #u10791 {
-    z-index: 260;
-    min-height: 861px;
+    z-index: 290;
+    height: 804px;
     opacity: 1;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=100);
-    background: transparent url("../images/portada-hubble.jpg?crc=96456959") no-repeat center center;
+    background: transparent url("../images/backcuantas.jpg") no-repeat center center;
     background-size: cover;
 }
 
@@ -1370,8 +1370,11 @@
 #u12882 {
     z-index: 271;
     width: 381px;
-    background-color: #C87267;
-    background-color: rgba(187, 80, 66, 0.8);
+    background: #2A2D32 url("../images/capa-cuentas.png")no-repeat;
+    background-size: 400px 80px;
+    background-position: center;
+    /* background-color: #C87267;
+    background-color: rgba(187, 80, 66, 0.8); */
     border-radius: 10px;
     padding-bottom: 7px;
     margin-left: 1px;
@@ -1410,8 +1413,11 @@
 #u12885 {
     z-index: 272;
     width: 382px;
-    background-color: #C87267;
-    background-color: rgba(187, 80, 66, 0.8);
+    /* background-color: #C87267;
+    background-color: rgba(187, 80, 66, 0.8); */
+    background: #2A2D32 url("../images/capa-cuentas.png")no-repeat;
+    background-size: 400px 80px;
+    background-position: center;
     border-radius: 10px;
     padding-bottom: 7px;
     margin-top: 13px;
@@ -1450,8 +1456,11 @@
 #u12888 {
     z-index: 273;
     width: 382px;
-    background-color: #C87267;
-    background-color: rgba(187, 80, 66, 0.8);
+    /* background-color: #C87267;
+    background-color: rgba(187, 80, 66, 0.8); */
+    background: #2A2D32 url("../images/capa-cuentas.png")no-repeat;
+    background-size: 400px 80px;
+    background-position: center;
     border-radius: 10px;
     padding-bottom: 7px;
     margin-top: 14px;
@@ -1490,8 +1499,11 @@
 #u12891 {
     z-index: 274;
     width: 382px;
-    background-color: #C87267;
-    background-color: rgba(187, 80, 66, 0.8);
+    background: #2A2D32 url("../images/capa-cuentas.png")no-repeat;
+    background-size: 400px 80px;
+    background-position: center;
+    /* background-color: #C87267;
+    background-color: rgba(187, 80, 66, 0.8); */
     border-radius: 10px;
     padding-bottom: 7px;
     margin-top: 13px;
@@ -1530,8 +1542,11 @@
 #u12894 {
     z-index: 275;
     width: 382px;
-    background-color: #C87267;
-    background-color: rgba(187, 80, 66, 0.8);
+    /* background-color: #C87267;
+    background-color: rgba(187, 80, 66, 0.8); */
+    background: #2A2D32 url("../images/capa-cuentas.png")no-repeat;
+    background-size: 400px 80px;
+    background-position: center;
     border-radius: 10px;
     padding-bottom: 8px;
     margin-top: 13px;
@@ -1615,8 +1630,11 @@
     z-index: 559;
     width: 232px;
     box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.16000000000000003);
-    background-color: #C87267;
-    background-color: rgba(187, 80, 66, 0.8);
+    background: #2A2D32 url("../images/fondo-cuentas.png")no-repeat;
+    background-size: 1200px 780px;
+    background-position: center;
+    /* background-color: #C87267;
+    background-color: rgba(187, 80, 66, 0.8); */
     border-radius: 10px;
     position: relative;
     margin-right: -10000px;
@@ -1857,7 +1875,10 @@
     z-index: 295;
     width: 168px;
     min-height: 45px;
-    background-color: #913A32;
+    background: #2A2D32 url("../images/capa-cuentas.png")no-repeat;
+    background-size: 400px 80px;
+    background-position: center;
+    /* background-color: #913A32; */
     border-radius: 14px;
     color: #FFFFFF;
     text-align: center;
@@ -1870,6 +1891,7 @@
 }
 
 #u12957-4:hover {
+    opacity: 0.8;
     background-color: #3E5A68;
     padding-top: 0px;
     padding-bottom: 0px;
@@ -4049,7 +4071,7 @@
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=100);
     padding-bottom: 6px;
-    background: transparent url("../images/capa-19.jpg?crc=103691475") no-repeat left center;
+    background: transparent url("../images/capa-19-2.jpg?crc=103691475") no-repeat left center;
     background-size: cover;
 }
 
@@ -4072,7 +4094,8 @@
 
 #u8114 {
     z-index: 192;
-    width: 171px;
+    width: 279px;
+    height: 38px;
     background-color: transparent;
     position: relative;
 }
@@ -4084,14 +4107,15 @@
     background-color: transparent;
     margin-top: 36px;
     position: relative;
+    color: white !important;
 }
 
 #u8124-2 {
-    color: #C9C9C9;
+    color: #FFFFFF;
 }
 
 #u8124-10 {
-    color: #B7B7B7;
+    color: #FFFFFF;
 }
 
 #u8956-2,
@@ -4104,7 +4128,7 @@
 #u8124-8,
 #u8124-11,
 #u8124-13 {
-    color: #7F7F7F;
+    color: #FFFFFF;
 }
 
 #buttonu8980 {

@@ -1,13 +1,14 @@
-window.onload = function () {
+window.onload = function() {
     $('#onloader').fadeOut();
     $('#page').removeClass('hidden');
+    getServerStatus();
     const userAuth = localStorage.getItem('auth');
     const user = localStorage.getItem('user');
     changePanelLink(userAuth);
-    getServerStatus();
-    populateTopTenClans('.top10Clanlist',10);
-    populateTopStats('.top10PvpList','pvp',10);
-    populateTopStats('.top10PkList','pk',10);
+
+    populateTopTenClans('.top10Clanlist', 10);
+    populateTopStats('.top10PvpList', 'pvp', 10);
+    populateTopStats('.top10PkList', 'pk', 10);
     if (!userAuth) {
         $('#panelUserAuth').addClass('hidden');
     } else {
@@ -23,17 +24,17 @@ window.onload = function () {
     }
 }
 
-const getServerStatus = async()=>{
+const getServerStatus = async() => {
     try {
         const url = `http://34.199.191.171:5000/checkServerStatus`;
         const response = await axios.get(url);
         console.log(response.data);
-        if (response.data == 1){
-            $('#u6477-2').html('ON');
-            $('#u6477-2').addClass('serverOn');
-        }else{
-            $('#u6477-2').html('Off');
-            $('#u6477-2').removeClass('serverOn');
+        if (response.data == 1) {
+            $('#u6477-5').addClass('server-status-on');
+            $('#u6477-5').removeClass('server-status-off');
+        } else {
+            $('#u6477-5').addClass('server-status-off');
+            $('#u6477-5').removeClass('server-status-on');
         }
     } catch (error) {
         console.log(error);
@@ -44,34 +45,34 @@ const getServerStatus = async()=>{
         localStorage.removeItem('access_token');
     }
 }
-const getAccountInfo = async(user)=>{
-    try {
-        const url = `http://34.199.191.171:5000/getAccountInfo`;
-        // const url = `http://localhost:5000/getAccountInfo`;
-        const token = localStorage.getItem('access_token');
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        }
-        const data = {"username":`${user}`};
-        const response = await axios.post(url, data , {
-            headers:headers
-        })
-        console.log(response);
-    } catch (error) {
-        console.log(error);
-        if (error.response.status == 401) {
-            Swal.fire({
-                icon:'error',
-                title:'Session expired',
-                text:'Please relogin'
-            }).then(()=>{
-                logoutHandler();
-            });
+const getAccountInfo = async(user) => {
+        try {
+            const url = `http://34.199.191.171:5000/getAccountInfo`;
+            // const url = `http://localhost:5000/getAccountInfo`;
+            const token = localStorage.getItem('access_token');
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+            const data = { "username": `${user}` };
+            const response = await axios.post(url, data, {
+                headers: headers
+            })
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+            if (error.response.status == 401) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Session expired',
+                    text: 'Please relogin'
+                }).then(() => {
+                    logoutHandler();
+                });
+            }
         }
     }
-}
-// inputs elements for login form
+    // inputs elements for login form
 const txtLoginUser = document.querySelector(".txt-login-user");
 const txtLoginPass = document.querySelector(".txt-login-pass");
 const loginSubmit = document.querySelector(".loginSubmit");
@@ -91,22 +92,22 @@ const recoveryPassordLink = document.getElementById('recoveryPassordLink');
 
 let auth = localStorage.getItem('auth');
 const changePanelLink = (auth) => {
-    if (auth) {
-        accountPanelLink.setAttribute('href', 'panel-de-cuentas-lineage-hubble.html');
-        donationLink.setAttribute('href', 'panel-de-cuentas-lineage-hubble.html');
-    } else {
-        accountPanelLink.setAttribute('href', 'index.html#registro');
-        donationLink.setAttribute('href', 'index.html#registro');
+        if (auth) {
+            accountPanelLink.setAttribute('href', 'panel-de-cuentas-lineage-hubble.html');
+            donationLink.setAttribute('href', 'panel-de-cuentas-lineage-hubble.html');
+        } else {
+            accountPanelLink.setAttribute('href', 'index.html#registro');
+            donationLink.setAttribute('href', 'index.html#registro');
+        }
     }
-}
-// loginSubmit.addEventListener("click",()=>{
-//     // change this for 
-//     localStorage.setItem("user",txtLoginUser.value);
-//     localStorage.setItem("pass",txtLoginPass.value);
-//     location.href = "panel-de-cuentas-lineage-hubble.html";
-//     const user = localStorage.getItem("user");
-//     console.log(user);
-// });
+    // loginSubmit.addEventListener("click",()=>{
+    //     // change this for 
+    //     localStorage.setItem("user",txtLoginUser.value);
+    //     localStorage.setItem("pass",txtLoginPass.value);
+    //     location.href = "panel-de-cuentas-lineage-hubble.html";
+    //     const user = localStorage.getItem("user");
+    //     console.log(user);
+    // });
 const authUser = (txtUser) => {
     localStorage.setItem("user", txtUser.value);
     localStorage.setItem('auth', true);
@@ -114,7 +115,7 @@ const authUser = (txtUser) => {
 
 const token = "";
 // signinHandler para manejar el inicio de sesion
-const signinHandler = async () => {
+const signinHandler = async() => {
 
     try {
         const errorAlphaNumeric = validateAlphaNumeric(txtLoginUser);
@@ -164,7 +165,7 @@ const signinHandler = async () => {
 }
 
 // signupHandler par manejar el nuevo registro de usuarios
-const signupHandler = async () => {
+const signupHandler = async() => {
     try {
         const errorAlphaNumeric = validateAlphaNumeric(txtRegUser);
         const errorForm = validateForm('#registerForm');
@@ -312,12 +313,13 @@ const recoveryPasswordHandler = () => {
         input: 'text',
         inputValidator: (value) => {
             return new Promise((resolve) => {
-              if (value != '' && validateEmail(value)) {
-                resolve();
-              } else {
-                resolve('You have to enter a valid mail');
-              }
-            })},
+                if (value != '' && validateEmail(value)) {
+                    resolve();
+                } else {
+                    resolve('You have to enter a valid mail');
+                }
+            })
+        },
         inputAttributes: {
             autocapitalize: 'off'
         },
@@ -330,36 +332,36 @@ const recoveryPasswordHandler = () => {
                 email
             }
             return fetch('//34.199.191.171:5000/recovery', {
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: { "Content-type": "application/json; charset=UTF-8" }
-            })
-            .then(response => {
-                console.log(response);
-                if (!response.ok) {
-                    throw new Error(response.statusText)
-                }
-                // if (response.json().value.code == 400) {
-                //     Swal.showValidationMessage(
-                //         'Email was not found in database'
-                //     )
-                // }
-                return response.json()
-            })
-            .catch(error => {
-                Swal.showValidationMessage(
-                    `Request failed: ${error}`
-                )
-            })
+                    method: "POST",
+                    body: JSON.stringify(data),
+                    headers: { "Content-type": "application/json; charset=UTF-8" }
+                })
+                .then(response => {
+                    console.log(response);
+                    if (!response.ok) {
+                        throw new Error(response.statusText)
+                    }
+                    // if (response.json().value.code == 400) {
+                    //     Swal.showValidationMessage(
+                    //         'Email was not found in database'
+                    //     )
+                    // }
+                    return response.json()
+                })
+                .catch(error => {
+                    Swal.showValidationMessage(
+                        `Request failed: ${error}`
+                    )
+                })
         }
     }).then((result) => {
         if (result.isConfirmed) {
             if (result.value.code == 400) {
                 Swal.fire({
-                    icon:'error',
-                    text:'Email not registered'
-                }).then(()=>recoveryPasswordHandler());
-            }else{
+                    icon: 'error',
+                    text: 'Email not registered'
+                }).then(() => recoveryPasswordHandler());
+            } else {
                 console.log(result);
                 // Swal.fire({
                 //     title: 'Multiple inputs',
@@ -421,30 +423,30 @@ const recoveryPasswordHandler = () => {
 
 recoveryPassordLink.addEventListener('click', recoveryPasswordHandler);
 
-const modalRecoverPassword = ()=>{
+const modalRecoverPassword = () => {
     Swal.fire({
         title: 'Final step',
-        html:'</br><p>Enter recovery code:</p>' +
-          '<input id="swal-input1" type="text"  class="swal2-input">' +
-          '<p>Enter your new password:</p>' +
-          '<input id="swal-input2" type="password"  class="swal2-input">' +
-          '<p>Repeat your new password:</p>' +
-          '<input id="swal-input3" type="password"  class="swal2-input">',
+        html: '</br><p>Enter recovery code:</p>' +
+            '<input id="swal-input1" type="text"  class="swal2-input">' +
+            '<p>Enter your new password:</p>' +
+            '<input id="swal-input2" type="password"  class="swal2-input">' +
+            '<p>Repeat your new password:</p>' +
+            '<input id="swal-input3" type="password"  class="swal2-input">',
         focusConfirm: false,
         preConfirm: () => {
             // const swalRecoveryCode = document.getElementById('swal-input1');
             const swalPass2 = document.getElementById('swal-input2');
             const swalPass3 = document.getElementById('swal-input3');
-            let data ={
+            let data = {
                 recoveryCode: document.getElementById('swal-input1').value,
                 newPassword: swalPass2.value
             }
-                if (swalPass2.value !='') {
-                    if (swalPass2.value == swalPass3.value) {
-                        return fetch('//34.199.191.171:5000/resetPassword', {
+            if (swalPass2.value != '') {
+                if (swalPass2.value == swalPass3.value) {
+                    return fetch('//34.199.191.171:5000/resetPassword', {
                             method: "POST",
                             body: JSON.stringify(data),
-                            headers: { "Content-type": "application/json; charset=UTF-8"}
+                            headers: { "Content-type": "application/json; charset=UTF-8" }
                         })
                         .then(response => {
                             if (!response.ok) {
@@ -457,41 +459,41 @@ const modalRecoverPassword = ()=>{
                                 `Request failed: ${error}`
                             )
                         })
-                    }else{
-                        console.log('no tan rapido amiguito xd');
-                        Swal.fire({
-                            icon:'error',
-                            text:'Both password inputs must match!'
-                        }).then(()=>modalRecoverPassword());
-                    }
                 } else {
+                    console.log('no tan rapido amiguito xd');
                     Swal.fire({
-                        icon:'error',
-                        text:'You have to enter a new password'
-                    }).then(()=>modalRecoverPassword());
+                        icon: 'error',
+                        text: 'Both password inputs must match!'
+                    }).then(() => modalRecoverPassword());
                 }
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'You have to enter a new password'
+                }).then(() => modalRecoverPassword());
+            }
         }
-    }).then((res) =>{
+    }).then((res) => {
         if (res.isConfirmed) {
             console.log(res.value)
             if (res.value.code == 200) {
                 Swal.fire({
                     title: 'Done!',
                     icon: 'success',
-                    text:'Password has been updated'
+                    text: 'Password has been updated'
                 })
-            }else{
+            } else {
                 console.log(res);
                 Swal.fire({
                     title: 'Error!',
                     icon: 'error',
-                    text:'Recovery code is not valid'
-                }).then(()=>modalRecoverPassword());
+                    text: 'Recovery code is not valid'
+                }).then(() => modalRecoverPassword());
             }
         }
     })
 }
-const getTopClans = async (qty)=>{
+const getTopClans = async(qty) => {
     try {
         const url = `http://34.199.191.171:5000/getTopClans/${qty}`;
         // const url = `http://localhost:5000/getTopClans/${qty}`;
@@ -501,24 +503,24 @@ const getTopClans = async (qty)=>{
         console.log(error)
     }
 }
-const populateTopTenClans = async(tableSelector,qty)=>{
+const populateTopTenClans = async(tableSelector, qty) => {
     const topList = await getTopClans(qty);
     console.log(topList);
     const table = document.querySelector(tableSelector);
-    for (let i = 0; i < topList.length; i++) { 
+    for (let i = 0; i < topList.length; i++) {
         let tr = document.createElement('tr'); //Create 3 <tr> elements assigned to a unique variable BUT need a working alternative for 'tr[i]'
         table.appendChild(tr); // Append to <table> node
         let tdElementPos = document.createElement('td');
         tdElementPos.innerHTML = `${[i+1]}.`;
         tr.appendChild(tdElementPos);
-        for (let j = 0;j < 1; j++) {
+        for (let j = 0; j < 1; j++) {
             let tdElement = document.createElement('td');
-            tdElement.innerHTML = Object.values(topList[i])[j+3];
+            tdElement.innerHTML = Object.values(topList[i])[j];
             tr.appendChild(tdElement);
         }
     }
 }
-const getTopTens = async(mode,qty)=>{
+const getTopTens = async(mode, qty) => {
     try {
         const url = `http://34.199.191.171:5000/getTops/${mode}/${qty}`;
         // const url = `http://localhost:5000/getTops/${mode}/${qty}`;
@@ -528,16 +530,16 @@ const getTopTens = async(mode,qty)=>{
         console.log(error)
     }
 }
-const populateTopStats = async(tableSelector,mode,qty)=>{
-    const topList = await getTopTens(mode,qty);
+const populateTopStats = async(tableSelector, mode, qty) => {
+    const topList = await getTopTens(mode, qty);
     const table = document.querySelector(tableSelector);
-    for (let i = 0; i < topList.length; i++) { 
+    for (let i = 0; i < topList.length; i++) {
         let tr = document.createElement('tr'); //Create 3 <tr> elements assigned to a unique variable BUT need a working alternative for 'tr[i]'
         table.appendChild(tr); // Append to <table> node
         let tdElementPos = document.createElement('td');
         tdElementPos.innerHTML = `${[i+1]}.`;
         tr.appendChild(tdElementPos);
-        for (let j = 0;j < 1; j++) {
+        for (let j = 0; j < 1; j++) {
             let tdElement = document.createElement('td');
             tdElement.innerHTML = Object.values(topList[i])[j];
             tr.appendChild(tdElement);
