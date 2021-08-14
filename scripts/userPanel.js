@@ -1,3 +1,5 @@
+const IP_BACKEND = '34.199.191.171:5000';
+
 window.onload = function() {
     getServerStatus();
     getDonations();
@@ -16,7 +18,7 @@ let topClan = {};
 
 const getCharacters = async(username) => {
     try {
-        const url = `http://34.199.191.171:5000/getCharacters/${username}`;
+        const url = `http://${IP_BACKEND}/getCharacters/${username}`;
         // const url = `http://localhost:5000/getCharacters/${username}`;
         const token = localStorage.getItem('access_token');
         const headers = {
@@ -49,7 +51,7 @@ const getCharacters = async(username) => {
 }
 const getAccountInfo = async(username) => {
     try {
-        const url = `http://34.199.191.171:5000/getAccountInfo`;
+        const url = `http://${IP_BACKEND}/getAccountInfo`;
         // const url = `http://localhost:5000/getAccountInfo`;
         const token = localStorage.getItem('access_token');
         const headers = {
@@ -97,7 +99,7 @@ const getTopStatsServer = async() => {
 }
 const getTops = async(mode, qty) => {
     try {
-        const url = `http://34.199.191.171:5000/getTops/${mode}/${qty}`;
+        const url = `http://${IP_BACKEND}/getTops/${mode}/${qty}`;
         // const url = `http://localhost:5000/getTops/${mode}/${qty}`;
         const response = await axios.get(url);
         return response.data;
@@ -107,7 +109,7 @@ const getTops = async(mode, qty) => {
 }
 const getTopClans = async(qty) => {
     try {
-        const url = `http://34.199.191.171:5000/getTopClans/${qty}`;
+        const url = `http://${IP_BACKEND}/getTopClans/${qty}`;
         // const url = `http://localhost:5000/getTopClans/${qty}`;
         const response = await axios.get(url);
         return response.data;
@@ -351,7 +353,7 @@ const changeMailSubmit = document.getElementById('changeMailSubmit');
 const handleChangePassword = async() => {
     try {
         if (txtChangePasswordNew1.value == txtChangePasswordNew2.value) {
-            const url = 'http://34.199.191.171:5000/changePassword';
+            const url = `http://${IP_BACKEND}/changePassword`;
             // const url = 'http://localhost:5000/changePassword';
             const username = localStorage.getItem('user');
             const newPassword = txtChangePasswordNew1.value;
@@ -401,7 +403,7 @@ const handleChangeMail = async() => {
     try {
         if (validateEmail(txtChangeMailNew1.value)) {
             if (txtChangeMailNew1.value == txtChangeMailNew2.value) {
-                const url = 'http://34.199.191.171:5000/changeEmail';
+                const url = `http://${IP_BACKEND}/changeEmail`;
                 const username = localStorage.getItem('user');
                 const newEmail = txtChangeMailNew1.value;
                 const data = {
@@ -512,7 +514,7 @@ const handleBtnKhipu = () => {
 }
 const postPaymentKhipu = async(amount) => {
     // const url = `http://34.199.191.171:5000/post-payment/${subject}/${currency}/${amount}`;
-    const url = `http://34.199.191.171:5000/payment`;
+    const url = `http://${IP_BACKEND}/payment`;
     const username = user.name;
     const charactername = selectCharDonation.value;
     const token = localStorage.getItem('access_token');
@@ -561,7 +563,7 @@ const postPaymentKhipu = async(amount) => {
 }
 
 const getStatusPayment = async(paymentId) => {
-        const url = `http://34.199.191.171:5000/status-payment/${paymentId}`;
+        const url = `http://${IP_BACKEND}/status-payment/${paymentId}`;
         // const url = `http://localhost:5000/status-payment/${paymentId}`;
         const response = await axios.get(url);
 
@@ -587,7 +589,7 @@ const checkPayment = async() => {
 
 const getServerStatus = async() => {
     try {
-        const url = `http://34.199.191.171:5000/checkServerStatus`;
+        const url = `http://${IP_BACKEND}/checkServerStatus`;
         const response = await axios.get(url);
         if (response.data == 1) {
             $('#u6477-5').addClass('server-status-on');
@@ -606,7 +608,7 @@ let donations = {
 };
 const getDonations = async() => {
     try {
-        const url = `http://34.199.191.171:5000/getPayments`;
+        const url = `http://${IP_BACKEND}/getPayments`;
         const username = user.name;
         const token = localStorage.getItem('access_token');
         const headers = {
@@ -661,7 +663,7 @@ const populateHistoryDonation = (donations) => {
 
 //paypal
 const postPaymentPaypal = async(orderid, amount) => {
-    const url = `http://34.199.191.171:5000/paypalListener`;
+    const url = `http://${IP_BACKEND}/paypalListener`;
     const username = user.name;
     const charactername = selectCharDonation.value;
     const token = localStorage.getItem('access_token');

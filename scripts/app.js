@@ -1,3 +1,5 @@
+const IP_BACKEND = '34.199.191.171:5000';
+
 window.onload = function() {
     $('#onloader').fadeOut();
     $('#page').removeClass('hidden');
@@ -26,7 +28,7 @@ window.onload = function() {
 
 const getServerStatus = async() => {
     try {
-        const url = `http://34.199.191.171:5000/checkServerStatus`;
+        const url = `http://${IP_BACKEND}/checkServerStatus`;
         const response = await axios.get(url);
         console.log(response.data);
         if (response.data == 1) {
@@ -47,7 +49,7 @@ const getServerStatus = async() => {
 }
 const getAccountInfo = async(user) => {
         try {
-            const url = `http://34.199.191.171:5000/getAccountInfo`;
+            const url = `http://${IP_BACKEND}/getAccountInfo`;
             // const url = `http://localhost:5000/getAccountInfo`;
             const token = localStorage.getItem('access_token');
             const headers = {
@@ -121,7 +123,7 @@ const signinHandler = async() => {
         const errorAlphaNumeric = validateAlphaNumeric(txtLoginUser);
         const errorForm = validateForm('#loginForm');
         if (!errorForm && !errorAlphaNumeric) {
-            const url = 'http://34.199.191.171:5000/login';
+            const url = `http://${IP_BACKEND}/login`;
             // const url = 'http://localhost:5000/login';
             const username = txtLoginUser.value;
             const password = txtLoginPass.value;
@@ -175,7 +177,7 @@ const signupHandler = async() => {
                     if (txtMail.value == txtMail2.value) {
                         // full valid form next action
                         if (validateEmail(txtMail.value)) {
-                            const url = 'http://34.199.191.171:5000/newUser';
+                            const url = `http://${IP_BACKEND}/newUser`;
                             // const url = 'http://localhost:5000/newUser';
                             const mail = txtMail.value;
                             const password = txtRegPass.value;
@@ -495,7 +497,7 @@ const modalRecoverPassword = () => {
 }
 const getTopClans = async(qty) => {
     try {
-        const url = `http://34.199.191.171:5000/getTopClans/${qty}`;
+        const url = `http://${IP_BACKEND}/getTopClans/${qty}`;
         // const url = `http://localhost:5000/getTopClans/${qty}`;
         const response = await axios.get(url);
         return response.data;
@@ -522,7 +524,7 @@ const populateTopTenClans = async(tableSelector, qty) => {
 }
 const getTopTens = async(mode, qty) => {
     try {
-        const url = `http://34.199.191.171:5000/getTops/${mode}/${qty}`;
+        const url = `http://${IP_BACKEND}/getTops/${mode}/${qty}`;
         // const url = `http://localhost:5000/getTops/${mode}/${qty}`;
         const response = await axios.get(url);
         return response.data;
